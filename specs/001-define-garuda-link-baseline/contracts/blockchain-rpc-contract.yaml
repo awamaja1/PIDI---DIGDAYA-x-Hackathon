@@ -1,0 +1,285 @@
+# GARUDA-LINK Blockchain RPC Contract
+
+**Versi**: v1 | **Tanggal**: 2026-03-17  
+**Referensi Requirements**: FR-004, AC-BNK-01, AC-BNK-03, HA-001..003
+
+Dokumen ini mendefinisikan kontrak antarmuka antara backend-api (Node.js/ethers.js)
+dan smart contract `HarvestTokenRegistry` yang di-deploy di Hyperledger Besu QBFT.
+
+**Penting**: Kontrak ini HANYA boleh diakses oleh backend-api. ai-engine TIDAK BOLEH
+memanggil JSON-RPC Besu secara langsung (HA-003 — violation arsitektur).
+
+---
+
+## 1. Jaringan dan Koneksi
+
+| Parameter | Nilai |
+|---|---|
+| Network Name | GARUDA-LOCAL |
+| Chain ID | 1337 |
+| JSON-RPC Endpoint | `http://besu-node1:8545` (Docker internal) / `http://localhost:8545` (host) |
+| Consensus | QBFT (4-node, blockperiodseconds: 2) |
+| Finality | ~2 detik (1 blok) |
+| Toolchain | Hardhat 2.22 + ethers.js 6 |
+
+---
+
+## 2. Smart Contract: HarvestTokenRegistry
+
+**File**: `blockchain-contracts/contracts/HarvestTokenRegistry.sol`  
+**Solidity Version**: 0.8.24  
+**Deploy Address**: Dikonfigurasi via env `HARVEST_TOKEN_CONTRACT_ADDRESS`
+
+### 2.1 State Variables
+
+```solidity
+// Mapping tokenId → HarvestToken struct
+mapping(uint256 => HarvestToken) public tokens;
+
+// Anti-duplikasi batch_id (Edge Case spec)
+mapping(string => bool) public batchIdExists;
+
+// Counter untuk auto-increment tokenId
+uint256 public tokenCounter;
+
+// Owner/admin address (deployer)
+address public owner;
+```
+
+### 2.2 Struct: HarvestToken
+
+```solidity
+struct HarvestToken {
+    uint256 tokenId;
+    string  batchId;              // Mirror batch_id dari PostgreSQL
+    address farmerAddress;        // Wallet address petani (PoC: managed keypair)
+    string  commodityCode;        // "CABAI_RAWIT" | "BAWANG_MERAH" | "JAGUNG"
+    uint256 harvestQtyGrams;      // Quantity dalam gram (presisi integer)
+    uint256 referencePriceWei;    // Harga referensi dalam wei-equivalent unit
+    TokenStatus status;
+    string  correlationId;        // NFR-004: traceability string "GARUDA-{uuid4}"
+    uint256 mintedAt;             // Unix timestamp
+    uint256 updatedAt;            // Unix timestamp
+}
+```
+
+### 2.3 Enum: TokenStatus
+
+```solidity
+enum TokenStatus {
+    Draft,               // 0 — token dibuat, belum diverifikasi
+    PendingVerification, // 1 — dikirim ke Bank Mitra untuk verifikasi
+    Verified,            // 2 — Bank Mitra menyatakan valid
+    Collateralized,      // 3 — digunakan sebagai jaminan aktif
+    Released,            // 4 — jaminan dilepas pasca lunas
+    Rejected             // 5 — ditolak verifikasi/pembiayaan
+}
+```
+
+---
+
+## 3. Function Contracts
+
+### 3.1 mintToken — FR-004, AC-PET-03
+
+**Deskripsi**: Membuat token baru untuk batch panen. Menolak duplikasi `batchId`.
+
+**Solidity signature**:
+```solidity
+function mintToken(
+    string  calldata batchId,
+    address          farmerAddress,
+    string  calldata commodityCode,
+    uint256          harvestQtyGrams,
+    uint256          referencePriceWei,
+    string  calldata correlationId
+) external returns (uint256 tokenId)
+```
+
+**Validasi on-chain**:
+```solidity
+require(!batchIdExists[batchId], "HarvestToken: duplicate batchId");
+require(bytes(batchId).length > 0, "HarvestToken: batchId empty");
+require(harvestQtyGrams > 0, "HarvestToken: quantity must be positive");
+require(bytes(correlationId).length > 0, "HarvestToken: correlationId required");
+```
+
+**ethers.js call (backend-api)**:
+```javascript
+// backend-api/src/services/besuClient.js
+const tx = await contract.mintToken(
+  batchId,
+  farmerAddress,
+  commodityCode,
+  BigInt(harvestQtyGrams * 1000),  // kg → gram conversion
+  BigInt(referencePriceIdr),
+  correlationId
+);
+const receipt = await tx.wait(1);  // Tunggu 1 konfirmasi (QBFT finality ~2s)
+const tokenId = receipt.logs[0].args.tokenId;  // dari event TokenMinted
+```
+
+**Return / Output**:
+- `tokenId`: `uint256` — ID token baru (auto-increment)  
+- Event emitted: `TokenMinted`
+
+---
+
+### 3.2 updateStatus — AC-BNK-03
+
+**Deskripsi**: Memperbarui status token. Hanya boleh dipanggil oleh `owner` (backend-api wallet).
+
+**Solidity signature**:
+```solidity
+function updateStatus(
+    uint256          tokenId,
+    TokenStatus      newStatus,
+    string  calldata correlationId
+) external onlyOwner
+```
+
+**Validasi on-chain**:
+```solidity
+require(tokens[tokenId].tokenId != 0, "HarvestToken: token not found");
+require(isValidTransition(tokens[tokenId].status, newStatus), "HarvestToken: invalid state transition");
+```
+
+**State Transition Rules**:
+
+| Status Sumber | Status Tujuan yang Diizinkan |
+|---|---|
+| Draft | PendingVerification |
+| PendingVerification | Verified, Rejected |
+| Verified | Collateralized, Rejected |
+| Collateralized | Released |
+| Released | (terminal — tidak ada transisi) |
+| Rejected | (terminal — tidak ada transisi) |
+
+**ethers.js call (backend-api)**:
+```javascript
+const tx = await contract.updateStatus(
+  tokenId,
+  newStatusEnum,  // 0–5 sesuai enum TokenStatus
+  correlationId
+);
+await tx.wait(1);
+```
+
+---
+
+### 3.3 getToken — AC-BNK-01
+
+**Deskripsi**: Membaca data token dari blockchain. View function (tidak perlu gas, tidak ada tx).
+
+**Solidity signature**:
+```solidity
+function getToken(uint256 tokenId)
+    external view
+    returns (HarvestToken memory)
+```
+
+**ethers.js call (backend-api)**:
+```javascript
+const token = await contract.getToken(tokenId);
+// token.status adalah number 0–5 → map ke string di application layer
+```
+
+---
+
+## 4. Events — Untuk Indexing dan Audit (AC-REG-02)
+
+### 4.1 TokenMinted
+
+```solidity
+event TokenMinted(
+    uint256 indexed tokenId,
+    string  indexed batchId,
+    address indexed farmerAddress,
+    string          commodityCode,
+    uint256         harvestQtyGrams,
+    string          correlationId,
+    uint256         timestamp
+);
+```
+
+### 4.2 StatusUpdated
+
+```solidity
+event StatusUpdated(
+    uint256 indexed     tokenId,
+    TokenStatus         oldStatus,
+    TokenStatus         newStatus,
+    string              correlationId,
+    uint256             timestamp
+);
+```
+
+**Cara listen event di backend-api (ethers.js)**:
+```javascript
+contract.on("TokenMinted", (tokenId, batchId, farmerAddress, commodityCode, qty, corrId, ts) => {
+  // Update PostgreSQL harvest_assets dengan token_id dan besu_tx_hash
+  auditService.log({ module: 'blockchain', action: 'TOKEN_MINTED', correlationId: corrId, ... });
+});
+```
+
+---
+
+## 5. Error Handling — NFR-003
+
+| Kondisi | Solidity revert reason | HTTP di backend-api |
+|---|---|---|
+| batchId sudah ada | `"HarvestToken: duplicate batchId"` | 409 `TOKEN_DUPLICATE` |
+| tokenId tidak ditemukan | `"HarvestToken: token not found"` | 404 `NOT_FOUND` |
+| Transisi status ilegal | `"HarvestToken: invalid state transition"` | 400 `INVALID_REQUEST` |
+| Caller bukan owner | `"HarvestToken: caller is not owner"` | 403 `FORBIDDEN` |
+| Besu node tidak tersedia | (ethers.js timeout/connection error) | 503 `BESU_NODE_UNAVAILABLE` |
+
+Saat `BESU_NODE_UNAVAILABLE`:
+- Token status di PostgreSQL diset ke `pending_verification` dengan flag `blockchain_sync_pending=true`
+- AuditTrail dicatat dengan `status_after='PENDING_BLOCKCHAIN_SYNC'`
+- Retry mechanism via scheduled task (tidak termasuk scope PoC — dicatat sebagai TODO)
+
+---
+
+## 6. Deployment dan Konfigurasi
+
+### Deploy ke local Besu
+
+```bash
+cd blockchain-contracts
+npx hardhat run scripts/deploy.js --network besu-local
+# Output: Contract deployed at: 0x...
+# Simpan address ke .env: HARVEST_TOKEN_CONTRACT_ADDRESS=0x...
+```
+
+### Konfigurasi network di hardhat.config.js
+
+```javascript
+networks: {
+  'besu-local': {
+    url: process.env.BESU_RPC_URL || 'http://localhost:8545',
+    chainId: 1337,
+    accounts: [process.env.DEPLOYER_PRIVATE_KEY],
+    gas: 'auto',
+    gasPrice: 'auto',
+    timeout: 60000  // 60s untuk menghindari timeout saat boot
+  }
+}
+```
+
+### Environment Variables (backend-api)
+
+```
+BESU_RPC_URL=http://besu-node1:8545
+HARVEST_TOKEN_CONTRACT_ADDRESS=0x...
+DEPLOYER_PRIVATE_KEY=0x...   # Managed keypair untuk PoC, bukan wallet pengguna nyata
+```
+
+---
+
+## 7. Catatan Keamanan PoC
+
+- Private key deployer HANYA untuk PoC — jangan gunakan wallet dengan aset nyata
+- Tidak ada access control multi-role pada smart contract untuk PoC (hanya owner)
+- Kontrak belum diaudit keamanan — tidak untuk produksi
+- Chain ID 1337 adalah standard lokal dev, tidak bisa replay ke mainnet/testnet publik

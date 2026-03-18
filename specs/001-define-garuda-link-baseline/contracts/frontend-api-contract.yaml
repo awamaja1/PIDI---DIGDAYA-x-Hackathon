@@ -1,0 +1,830 @@
+openapi: "3.0.3"
+info:
+  title: "GARUDA-LINK Frontend API Contract"
+  description: |
+    Kontrak REST API untuk komunikasi Frontend (React) → Backend-API (Node.js/Express).
+    Semua endpoint menggunakan autentikasi SNAP BI: API Key + JWT RS256.
+    Setiap respons menyertakan `correlationId` untuk traceability lintas modul (NFR-004).
+    
+    **Versi kontrak**: v1 — perubahan wajib melalui persetujuan spec sebelum implementasi (HA-004).
+    
+    **Referensi Requirements**: FR-001..009, CR-001..005, NFR-001..005
+  version: "1.0.0"
+  contact:
+    name: "Tim GARUDA-LINK"
+
+servers:
+  - url: "http://localhost:3000/api/v1"
+    description: "PoC Local Development"
+
+security:
+  - ApiKeyAuth: []
+  - JwtAuth: []
+
+paths:
+  # ─────────────────────────────────────────────────────────────
+  # FR-001: Agregasi Data Harga Komoditas
+  # ─────────────────────────────────────────────────────────────
+  /prices:
+    get:
+      summary: "Ambil data harga komoditas"
+      operationId: "getPrices"
+      description: |
+        Mengembalikan data harga komoditas dari PIHPS (atau Mock-API jika fallback aktif).
+        Referensi: FR-001, AC-PET-01
+      parameters:
+        - name: "commodity_code"
+          in: "query"
+          required: true
+          schema:
+            type: "string"
+            enum: ["CABAI_RAWIT", "BAWANG_MERAH", "JAGUNG"]
+        - name: "region_code"
+          in: "query"
+          required: true
+          schema:
+            type: "string"
+            enum: ["JKT", "MKS", "SBY"]
+        - name: "days"
+          in: "query"
+          required: false
+          schema:
+            type: "integer"
+            default: 30
+            minimum: 1
+            maximum: 90
+        - $ref: "#/components/parameters/CorrelationId"
+      responses:
+        "200":
+          description: "Data harga berhasil diambil"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PriceListResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "503":
+          $ref: "#/components/responses/ServiceUnavailable"
+
+  # ─────────────────────────────────────────────────────────────
+  # FR-002: Prediksi Harga Komoditas
+  # ─────────────────────────────────────────────────────────────
+  /forecast/price:
+    post:
+      summary: "Prediksi harga komoditas (XGBoost-LSTM)"
+      operationId: "forecastPrice"
+      description: |
+        Memicu model hibrida XGBoost-LSTM di ai-engine untuk memprediksi harga
+        komoditas pada horizon yang ditentukan.
+        Referensi: FR-002, AC-PET-01 (≤5 detik)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ForecastRequest"
+      responses:
+        "200":
+          description: "Prediksi berhasil dihasilkan"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ForecastResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "503":
+          $ref: "#/components/responses/ServiceUnavailable"
+
+  # ─────────────────────────────────────────────────────────────
+  # FR-003: Optimasi Rute Armada
+  # ─────────────────────────────────────────────────────────────
+  /routes/optimize:
+    post:
+      summary: "Optimasi rute armada dinamis (GA + PPO)"
+      operationId: "optimizeRoute"
+      description: |
+        Memicu optimasi rute di ai-engine menggunakan GA dan PPO.
+        Referensi: FR-003, AC-PET-02 (pengurangan biaya ≥10%)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RouteOptimizeRequest"
+      responses:
+        "200":
+          description: "Rute optimal berhasil dihasilkan"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RouteOptimizeResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "503":
+          $ref: "#/components/responses/ServiceUnavailable"
+
+  # ─────────────────────────────────────────────────────────────
+  # FR-004: Tokenisasi Aset Panen
+  # ─────────────────────────────────────────────────────────────
+  /tokens:
+    post:
+      summary: "Ajukan tokenisasi aset panen (quasi-collateral)"
+      operationId: "mintToken"
+      description: |
+        Memproses pengajuan tokenisasi batch panen ke smart contract HarvestTokenRegistry
+        di Hyperledger Besu. Endpoint ini memerlukan HMAC-SHA256 signature (SNAP BI integrity).
+        Referensi: FR-004, AC-PET-03 (≤3 menit)
+      security:
+        - ApiKeyAuth: []
+        - JwtAuth: []
+        - HmacAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TokenMintRequest"
+      responses:
+        "202":
+          description: "Pengajuan tokenisasi diterima dan sedang diproses"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TokenMintAcceptedResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "409":
+          $ref: "#/components/responses/Conflict"
+        "503":
+          $ref: "#/components/responses/ServiceUnavailable"
+
+  /tokens/{tokenId}:
+    get:
+      summary: "Ambil status token aset panen"
+      operationId: "getToken"
+      parameters:
+        - name: "tokenId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+        - $ref: "#/components/parameters/CorrelationId"
+      responses:
+        "200":
+          description: "Status token berhasil diambil"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TokenStatusResponse"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /tokens/{tokenId}/status:
+    patch:
+      summary: "Perbarui status token (Bank Mitra / sistem)"
+      operationId: "updateTokenStatus"
+      description: |
+        Memperbarui status token on-chain dan di PostgreSQL secara sinkron.
+        Referensi: AC-BNK-03 (konsistensi lintas sistem 100%)
+      security:
+        - ApiKeyAuth: []
+        - JwtAuth: []
+        - HmacAuth: []
+      parameters:
+        - name: "tokenId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TokenStatusUpdateRequest"
+      responses:
+        "200":
+          description: "Status berhasil diperbarui"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TokenStatusUpdateResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "409":
+          $ref: "#/components/responses/Conflict"
+
+  # ─────────────────────────────────────────────────────────────
+  # FR-005: Evaluasi Pembiayaan + Verifikasi IASC OJK
+  # ─────────────────────────────────────────────────────────────
+  /financing/evaluate:
+    post:
+      summary: "Evaluasi pengajuan pembiayaan berbasis rekam jejak IASC OJK"
+      operationId: "evaluateFinancing"
+      description: |
+        Memverifikasi token aset via IASC OJK (atau mock), menghitung skor risiko,
+        dan menghasilkan rekomendasi keputusan pembiayaan.
+        Referensi: FR-005, AC-BNK-02 (≤10 detik)
+      security:
+        - ApiKeyAuth: []
+        - JwtAuth: []
+        - HmacAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FinancingEvaluateRequest"
+      responses:
+        "200":
+          description: "Evaluasi pembiayaan berhasil"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FinancingEvaluateResponse"
+        "202":
+          description: "Verifikasi IASC masih pending (Edge Case: tidak sinkron)"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IASCPendingResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+
+  # ─────────────────────────────────────────────────────────────
+  # FR-009: Compliance & Audit Trail
+  # ─────────────────────────────────────────────────────────────
+  /compliance/report:
+    get:
+      summary: "Hasilkan laporan kepatuhan SNAP BI + UU PDP"
+      operationId: "getComplianceReport"
+      description: |
+        Menghasilkan laporan kepatuhan berdasarkan periode audit yang dipilih.
+        Referensi: AC-REG-01 (≤2 menit)
+      parameters:
+        - name: "period_start"
+          in: "query"
+          required: true
+          schema:
+            type: "string"
+            format: "date"
+        - name: "period_end"
+          in: "query"
+          required: true
+          schema:
+            type: "string"
+            format: "date"
+        - $ref: "#/components/parameters/CorrelationId"
+      responses:
+        "200":
+          description: "Laporan kepatuhan berhasil dihasilkan"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ComplianceReportResponse"
+
+  /audit/trace/{correlationId}:
+    get:
+      summary: "Telusuri jejak transaksi lintas modul"
+      operationId: "getAuditTrace"
+      description: |
+        Mengembalikan seluruh event audit untuk correlation ID tertentu,
+        lintas modul (frontend, backend-api, ai-engine, blockchain).
+        Referensi: AC-REG-02 (100% penelusuran tanpa kehilangan ID)
+      parameters:
+        - name: "correlationId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            pattern: "^GARUDA-[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+      responses:
+        "200":
+          description: "Jejak audit ditemukan"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuditTraceResponse"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /health:
+    get:
+      summary: "Health check semua layanan"
+      operationId: "healthCheck"
+      security: []
+      responses:
+        "200":
+          description: "Status kesehatan seluruh layanan"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthResponse"
+
+# ─────────────────────────────────────────────────────────────────
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: "apiKey"
+      in: "header"
+      name: "X-API-Key"
+      description: "SNAP BI: machine-to-machine authentication"
+    JwtAuth:
+      type: "http"
+      scheme: "bearer"
+      bearerFormat: "JWT"
+      description: "SNAP BI: user session JWT RS256"
+    HmacAuth:
+      type: "apiKey"
+      in: "header"
+      name: "X-Signature"
+      description: "SNAP BI: HMAC-SHA256 message integrity — format: hmac-sha256 <base64-hash>"
+
+  parameters:
+    CorrelationId:
+      name: "X-Correlation-ID"
+      in: "header"
+      required: false
+      schema:
+        type: "string"
+        pattern: "^GARUDA-[0-9a-f-]{36}$"
+      description: "ID korelasi untuk traceability lintas modul (NFR-004). Dibuat otomatis jika tidak disertakan."
+
+  schemas:
+    # ── Request Schemas ──────────────────────────────────────
+    ForecastRequest:
+      type: "object"
+      required: ["commodity_code", "region_code", "horizon_days"]
+      properties:
+        commodity_code:
+          type: "string"
+          enum: ["CABAI_RAWIT", "BAWANG_MERAH", "JAGUNG"]
+        region_code:
+          type: "string"
+          enum: ["JKT", "MKS", "SBY"]
+        horizon_days:
+          type: "integer"
+          minimum: 1
+          maximum: 7
+
+    RouteOptimizeRequest:
+      type: "object"
+      required: ["origin", "destinations", "fleet_capacity_kg", "deadline"]
+      properties:
+        origin:
+          $ref: "#/components/schemas/GeoPoint"
+        destinations:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/GeoPoint"
+          minItems: 1
+          maxItems: 10
+        fleet_capacity_kg:
+          type: "number"
+          minimum: 1
+        deadline:
+          type: "string"
+          format: "date-time"
+
+    TokenMintRequest:
+      type: "object"
+      required: ["batch_id", "farmer_id", "commodity_code", "harvest_quantity_kg", "harvest_date"]
+      properties:
+        batch_id:
+          type: "string"
+          maxLength: 50
+          description: "Identitas unik batch panen — duplikasi ditolak (409)"
+        farmer_id:
+          type: "string"
+          format: "uuid"
+        commodity_code:
+          type: "string"
+          enum: ["CABAI_RAWIT", "BAWANG_MERAH", "JAGUNG"]
+        harvest_quantity_kg:
+          type: "number"
+          minimum: 0.1
+        harvest_date:
+          type: "string"
+          format: "date"
+
+    TokenStatusUpdateRequest:
+      type: "object"
+      required: ["new_status"]
+      properties:
+        new_status:
+          type: "string"
+          enum: ["verified", "collateralized", "released", "rejected"]
+        reason:
+          type: "string"
+          maxLength: 500
+
+    FinancingEvaluateRequest:
+      type: "object"
+      required: ["harvest_asset_id", "bank_partner_id"]
+      properties:
+        harvest_asset_id:
+          type: "string"
+          format: "uuid"
+        bank_partner_id:
+          type: "string"
+
+    # ── Response Schemas ─────────────────────────────────────
+    PriceListResponse:
+      type: "object"
+      required: ["data", "metadata", "correlationId"]
+      properties:
+        data:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/PriceRecord"
+        metadata:
+          type: "object"
+          properties:
+            source:
+              type: "string"
+              enum: ["PIHPS", "MOCK"]
+            fallback_active:
+              type: "boolean"
+            record_count:
+              type: "integer"
+        correlationId:
+          type: "string"
+
+    ForecastResponse:
+      type: "object"
+      required: ["predictions", "model_info", "correlationId"]
+      properties:
+        predictions:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/ForecastPoint"
+        model_info:
+          type: "object"
+          properties:
+            version:
+              type: "string"
+            algorithm:
+              type: "string"
+              example: "XGBoost-LSTM-hybrid-v1.0.0"
+            input_data_quality:
+              type: "string"
+              enum: ["GOOD", "DEGRADED", "MOCK"]
+        correlationId:
+          type: "string"
+
+    RouteOptimizeResponse:
+      type: "object"
+      required: ["route_plan", "metrics", "correlationId"]
+      properties:
+        route_plan:
+          type: "object"
+          properties:
+            ordered_stops:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/GeoPoint"
+            segments:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/RouteSegment"
+        metrics:
+          type: "object"
+          required: ["estimated_cost_idr", "estimated_duration_min", "service_level_pct", "cost_reduction_pct"]
+          properties:
+            estimated_cost_idr:
+              type: "number"
+            estimated_duration_min:
+              type: "integer"
+            service_level_pct:
+              type: "number"
+            cost_reduction_pct:
+              type: "number"
+              description: "Pengurangan biaya vs baseline statis (AC-PET-02: ≥10%)"
+            algorithm_used:
+              type: "string"
+              enum: ["GA", "GA+PPO", "GA+PPO+GNN"]
+        correlationId:
+          type: "string"
+
+    TokenMintAcceptedResponse:
+      type: "object"
+      properties:
+        harvest_asset_id:
+          type: "string"
+          format: "uuid"
+        batch_id:
+          type: "string"
+        status:
+          type: "string"
+          example: "pending_verification"
+        estimated_completion_seconds:
+          type: "integer"
+          example: 30
+        correlationId:
+          type: "string"
+
+    TokenStatusResponse:
+      type: "object"
+      properties:
+        token_id:
+          type: "string"
+        batch_id:
+          type: "string"
+        status:
+          type: "string"
+          enum: ["draft", "pending_verification", "verified", "collateralized", "released", "rejected"]
+        besu_tx_hash:
+          type: "string"
+        besu_block_number:
+          type: "integer"
+        correlationId:
+          type: "string"
+
+    TokenStatusUpdateResponse:
+      type: "object"
+      properties:
+        token_id:
+          type: "string"
+        old_status:
+          type: "string"
+        new_status:
+          type: "string"
+        besu_tx_hash:
+          type: "string"
+        correlationId:
+          type: "string"
+
+    FinancingEvaluateResponse:
+      type: "object"
+      required: ["decision", "risk_score", "iasc_trace_ref", "correlationId"]
+      properties:
+        application_id:
+          type: "string"
+          format: "uuid"
+        decision:
+          type: "string"
+          enum: ["approved", "rejected", "pending"]
+        risk_score:
+          type: "number"
+          minimum: 0
+          maximum: 100
+        risk_rationale:
+          type: "string"
+        iasc_trace_ref:
+          type: "string"
+        iasc_verification_status:
+          type: "string"
+          enum: ["verified", "pending", "failed"]
+        correlationId:
+          type: "string"
+
+    IASCPendingResponse:
+      type: "object"
+      properties:
+        status:
+          type: "string"
+          example: "pending_verification"
+        retry_after_seconds:
+          type: "integer"
+          example: 300
+        iasc_trace_ref:
+          type: "string"
+        correlationId:
+          type: "string"
+
+    ComplianceReportResponse:
+      type: "object"
+      properties:
+        period:
+          type: "object"
+          properties:
+            start:
+              type: "string"
+              format: "date"
+            end:
+              type: "string"
+              format: "date"
+        controls:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/ComplianceControlItem"
+        summary:
+          type: "object"
+          properties:
+            total_controls:
+              type: "integer"
+            compliant:
+              type: "integer"
+            non_compliant:
+              type: "integer"
+        correlationId:
+          type: "string"
+
+    AuditTraceResponse:
+      type: "object"
+      properties:
+        correlation_id:
+          type: "string"
+        events:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/AuditEvent"
+        modules_involved:
+          type: "array"
+          items:
+            type: "string"
+
+    HealthResponse:
+      type: "object"
+      properties:
+        status:
+          type: "string"
+          enum: ["healthy", "degraded", "unhealthy"]
+        services:
+          type: "object"
+          properties:
+            database:
+              type: "string"
+            ai_engine:
+              type: "string"
+            besu_node:
+              type: "string"
+            mock_api:
+              type: "string"
+
+    # ── Shared Schemas ───────────────────────────────────────
+    GeoPoint:
+      type: "object"
+      required: ["code", "lat", "lon"]
+      properties:
+        code:
+          type: "string"
+        lat:
+          type: "number"
+        lon:
+          type: "number"
+        label:
+          type: "string"
+
+    RouteSegment:
+      type: "object"
+      properties:
+        from_code:
+          type: "string"
+        to_code:
+          type: "string"
+        distance_km:
+          type: "number"
+        estimated_duration_min:
+          type: "integer"
+        estimated_cost_idr:
+          type: "number"
+
+    PriceRecord:
+      type: "object"
+      properties:
+        commodity_code:
+          type: "string"
+        region_code:
+          type: "string"
+        price_value:
+          type: "number"
+        unit:
+          type: "string"
+        recorded_date:
+          type: "string"
+          format: "date"
+        quality_flag:
+          type: "string"
+          enum: ["NORMAL", "SUSPECT", "OUTLIER"]
+        anomaly_flag:
+          type: "boolean"
+
+    ForecastPoint:
+      type: "object"
+      properties:
+        forecast_date:
+          type: "string"
+          format: "date"
+        predicted_price:
+          type: "number"
+        confidence_low:
+          type: "number"
+        confidence_high:
+          type: "number"
+
+    ComplianceControlItem:
+      type: "object"
+      properties:
+        control_id:
+          type: "string"
+          example: "CR-001"
+        control_name:
+          type: "string"
+        status:
+          type: "string"
+          enum: ["compliant", "non_compliant", "not_applicable", "pending_review"]
+        evidence_ref:
+          type: "string"
+
+    AuditEvent:
+      type: "object"
+      properties:
+        module:
+          type: "string"
+        action:
+          type: "string"
+        actor_role:
+          type: "string"
+        entity_type:
+          type: "string"
+        entity_id:
+          type: "string"
+        status_before:
+          type: "string"
+        status_after:
+          type: "string"
+        metadata:
+          type: "object"
+        timestamp:
+          type: "string"
+          format: "date-time"
+
+    # ── Error Schemas ────────────────────────────────────────
+    ErrorResponse:
+      type: "object"
+      required: ["error"]
+      properties:
+        error:
+          type: "object"
+          required: ["code", "httpStatus", "message", "correlationId", "module", "timestamp"]
+          properties:
+            code:
+              type: "string"
+              enum:
+                - "INVALID_REQUEST"
+                - "AUTH_FAILED"
+                - "FORBIDDEN"
+                - "NOT_FOUND"
+                - "CONFLICT"
+                - "FORECAST_ENGINE_UNAVAILABLE"
+                - "ROUTE_ENGINE_UNAVAILABLE"
+                - "BESU_NODE_UNAVAILABLE"
+                - "IASC_VERIFICATION_TIMEOUT"
+                - "TOKEN_DUPLICATE"
+                - "DATA_QUALITY_LOW"
+                - "INTERNAL_ERROR"
+            httpStatus:
+              type: "integer"
+            message:
+              type: "string"
+            correlationId:
+              type: "string"
+            module:
+              type: "string"
+            timestamp:
+              type: "string"
+              format: "date-time"
+            fallback_active:
+              type: "boolean"
+              description: "true jika sistem otomatis beralih ke Mock-API (FR-008)"
+
+  responses:
+    BadRequest:
+      description: "Request tidak valid (validasi Joi gagal)"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+    Unauthorized:
+      description: "Autentikasi gagal (API Key / JWT tidak valid)"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+    Forbidden:
+      description: "Role tidak memiliki akses ke resource ini"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+    NotFound:
+      description: "Resource tidak ditemukan"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+    Conflict:
+      description: "Konflik data (misal: batch_id sudah ada)"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+    ServiceUnavailable:
+      description: "Layanan tidak tersedia — fallback aktif (FR-008)"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"

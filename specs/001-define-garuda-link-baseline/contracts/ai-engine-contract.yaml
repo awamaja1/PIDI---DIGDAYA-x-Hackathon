@@ -1,0 +1,348 @@
+openapi: "3.0.3"
+info:
+  title: "GARUDA-LINK AI Engine Internal Contract"
+  description: |
+    Kontrak internal antara backend-api (Node.js) dan ai-engine (Python/FastAPI).
+    
+    **Penting**: Kontrak ini HANYA boleh dipanggil oleh backend-api (HA-002, HA-003).
+    Frontend TIDAK BOLEH memanggil langsung. Pelanggaran adalah violation arsitektur.
+    
+    **Versi**: v1 — perubahan wajib via spec review sebelum implementasi (HA-004).
+    
+    **Referensi Requirements**: FR-002 (prediksi harga), FR-003 (optimasi rute), HA-001..003
+  version: "1.0.0"
+
+servers:
+  - url: "http://ai-engine:8000"
+    description: "Internal Docker network (garuda-net)"
+
+paths:
+  /predict/price:
+    post:
+      summary: "Prediksi harga komoditas menggunakan model hibrida XGBoost-LSTM"
+      operationId: "predictPrice"
+      description: |
+        Menerima data histori harga komoditas dan menghasilkan prediksi harga
+        untuk horizon yang ditentukan beserta interval kepercayaan.
+        
+        Mode operasi:
+        - Normal: menjalankan model XGBoost-LSTM yang di-load dari file saved/
+        - Mock (MOCK_MODE=true): mengembalikan respons deterministik dari mock_responses.py
+        
+        Referensi: FR-002, AC-PET-01 (≤5 detik total termasuk network overhead)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PredictPriceRequest"
+      responses:
+        "200":
+          description: "Prediksi berhasil"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PredictPriceResponse"
+        "400":
+          $ref: "#/components/responses/ValidationError"
+        "422":
+          description: "Data input tidak cukup atau kualitas rendah"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DataQualityErrorResponse"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+  /optimize/route:
+    post:
+      summary: "Optimasi rute armada dinamis menggunakan GA + PPO"
+      operationId: "optimizeRoute"
+      description: |
+        Menerima parameter armada dan menghasilkan rute optimal menggunakan
+        Genetic Algorithm (GA via DEAP) dengan opsional PPO refinement.
+        
+        Layer komputasi:
+        - L1 GA (wajib): DEAP optimization, berjalan selalu
+        - L2 PPO (opsional): aktif jika ENABLE_PPO=true di env
+        - L3 GNN Stub: static region embedding, selalu aktif sebagai konteks
+        
+        Referensi: FR-003, AC-PET-02 (pengurangan biaya ≥10%)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OptimizeRouteRequest"
+      responses:
+        "200":
+          description: "Optimasi berhasil"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OptimizeRouteResponse"
+        "400":
+          $ref: "#/components/responses/ValidationError"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+  /health:
+    get:
+      summary: "Health check ai-engine"
+      operationId: "healthCheck"
+      responses:
+        "200":
+          description: "Status layanan AI Engine"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AIHealthResponse"
+
+components:
+  schemas:
+    PredictPriceRequest:
+      type: "object"
+      required: ["commodity_code", "region_code", "horizon_days", "correlation_id"]
+      properties:
+        commodity_code:
+          type: "string"
+          enum: ["CABAI_RAWIT", "BAWANG_MERAH", "JAGUNG"]
+        region_code:
+          type: "string"
+          enum: ["JKT", "MKS", "SBY"]
+        horizon_days:
+          type: "integer"
+          minimum: 1
+          maximum: 7
+        historical_prices:
+          type: "array"
+          description: |
+            Data histori harga opsional — jika kosong, ai-engine menggunakan
+            data yang di-cache dari PostgreSQL atau mock data.
+          items:
+            type: "object"
+            properties:
+              date:
+                type: "string"
+                format: "date"
+              price:
+                type: "number"
+              quality_flag:
+                type: "string"
+                enum: ["NORMAL", "SUSPECT", "OUTLIER"]
+        correlation_id:
+          type: "string"
+          description: "Wajib — untuk traceability (NFR-004)"
+          pattern: "^GARUDA-[0-9a-f-]{36}$"
+
+    PredictPriceResponse:
+      type: "object"
+      required: ["predictions", "model_meta", "correlation_id"]
+      properties:
+        predictions:
+          type: "array"
+          items:
+            type: "object"
+            required: ["forecast_date", "predicted_price", "confidence_low", "confidence_high"]
+            properties:
+              forecast_date:
+                type: "string"
+                format: "date"
+              predicted_price:
+                type: "number"
+              confidence_low:
+                type: "number"
+                description: "Lower bound interval kepercayaan 80%"
+              confidence_high:
+                type: "number"
+                description: "Upper bound interval kepercayaan 80%"
+        model_meta:
+          type: "object"
+          required: ["version", "algorithm", "data_quality"]
+          properties:
+            version:
+              type: "string"
+              example: "hybrid-v1.0.0"
+            algorithm:
+              type: "string"
+              example: "XGBoost-LSTM"
+            data_quality:
+              type: "string"
+              enum: ["GOOD", "DEGRADED", "MOCK"]
+              description: "DEGRADED jika data parsial/outlier (Edge Case spec)"
+            training_data_points:
+              type: "integer"
+            is_mock:
+              type: "boolean"
+        correlation_id:
+          type: "string"
+
+    DataQualityErrorResponse:
+      type: "object"
+      properties:
+        error_code:
+          type: "string"
+          example: "INSUFFICIENT_DATA"
+        message:
+          type: "string"
+        data_quality_issues:
+          type: "array"
+          items:
+            type: "string"
+        min_required_data_points:
+          type: "integer"
+        available_data_points:
+          type: "integer"
+        correlation_id:
+          type: "string"
+
+    OptimizeRouteRequest:
+      type: "object"
+      required: ["origin", "destinations", "fleet_capacity_kg", "deadline_iso", "correlation_id"]
+      properties:
+        origin:
+          $ref: "#/components/schemas/GeoPoint"
+        destinations:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/GeoPoint"
+          minItems: 1
+          maxItems: 10
+        fleet_capacity_kg:
+          type: "number"
+          minimum: 0.1
+        demand_per_destination_kg:
+          type: "array"
+          items:
+            type: "number"
+          description: "Demand per titik tujuan — wajib jika len(destinations) > 1"
+        deadline_iso:
+          type: "string"
+          format: "date-time"
+          description: "Batas waktu pengiriman (ISO 8601)"
+        algorithm_config:
+          type: "object"
+          properties:
+            ga_generations:
+              type: "integer"
+              default: 100
+              description: "Jumlah generasi GA — kurangi untuk demo cepat (misal: 50)"
+            enable_ppo:
+              type: "boolean"
+              default: false
+              description: "Aktifkan PPO refinement (butuh model pre-trained)"
+            random_seed:
+              type: "integer"
+              default: 42
+              description: "Seed untuk reprodusibilitas (NFR-001)"
+        correlation_id:
+          type: "string"
+          pattern: "^GARUDA-[0-9a-f-]{36}$"
+
+    OptimizeRouteResponse:
+      type: "object"
+      required: ["route_plan", "metrics", "algorithm_meta", "correlation_id"]
+      properties:
+        route_plan:
+          type: "object"
+          properties:
+            ordered_stops:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/GeoPoint"
+            total_distance_km:
+              type: "number"
+        metrics:
+          type: "object"
+          required: ["estimated_cost_idr", "estimated_duration_min", "service_level_pct"]
+          properties:
+            estimated_cost_idr:
+              type: "number"
+            estimated_duration_min:
+              type: "integer"
+            service_level_pct:
+              type: "number"
+              minimum: 0
+              maximum: 100
+            baseline_cost_idr:
+              type: "number"
+              description: "Biaya rute statis baseline untuk perbandingan"
+            cost_reduction_pct:
+              type: "number"
+              description: "Target AC-PET-02: ≥10%"
+        algorithm_meta:
+          type: "object"
+          properties:
+            algorithm_used:
+              type: "string"
+              enum: ["GA", "GA+PPO", "GA+PPO+GNN"]
+            ga_generations_run:
+              type: "integer"
+            ppo_active:
+              type: "boolean"
+            gnn_embedding_used:
+              type: "boolean"
+            optimization_time_ms:
+              type: "integer"
+        correlation_id:
+          type: "string"
+
+    AIHealthResponse:
+      type: "object"
+      properties:
+        status:
+          type: "string"
+          enum: ["healthy", "degraded", "unhealthy"]
+        models_loaded:
+          type: "object"
+          properties:
+            price_model:
+              type: "boolean"
+            route_model:
+              type: "boolean"
+            gnn_embeddings:
+              type: "boolean"
+        mock_mode:
+          type: "boolean"
+        version:
+          type: "string"
+
+    GeoPoint:
+      type: "object"
+      required: ["code", "lat", "lon"]
+      properties:
+        code:
+          type: "string"
+        lat:
+          type: "number"
+        lon:
+          type: "number"
+        label:
+          type: "string"
+
+    ErrorResponse:
+      type: "object"
+      required: ["error_code", "message", "correlation_id"]
+      properties:
+        error_code:
+          type: "string"
+        message:
+          type: "string"
+        detail:
+          type: "string"
+        correlation_id:
+          type: "string"
+
+  responses:
+    ValidationError:
+      description: "Input tidak valid (Pydantic validation error)"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+    InternalError:
+      description: "Error internal ai-engine (model inference gagal)"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"

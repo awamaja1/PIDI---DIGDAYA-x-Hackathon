@@ -1,0 +1,405 @@
+openapi: "3.0.3"
+info:
+  title: "GARUDA-LINK Mock API Contract"
+  description: |
+    Kontrak Mock-API untuk menggantikan endpoint eksternal PIHPS dan IASC OJK
+    saat endpoint aktual tidak tersedia (FR-008, AC-REG-03).
+    
+    Mock-API ini diimplementasikan DALAM PROSES di backend-api
+    (module: `backend-api/src/mock/mockServer.js`) — tidak memerlukan server terpisah.
+    
+    **Jaminan Mock-API (Assumptions & Mock-API Policy spec)**:
+    - Skema request/response semantically equivalent dengan endpoint target
+    - Kode status HTTP sama dengan endpoint aktual
+    - Pola error sama untuk kondisi kegagalan yang sama
+    - Respons DETERMINISTIK — input yang sama selalu menghasilkan output yang sama
+    
+    **Dataset Mock**:
+    - 3 komoditas: CABAI_RAWIT, BAWANG_MERAH, JAGUNG
+    - 3 wilayah: JKT (Jakarta), MKS (Makassar), SBY (Surabaya)
+    - 30 hari histori harga
+    - 10 sample IASC trace records
+    
+    **Versi**: v1
+    **Referensi**: FR-008, NFR-003, AC-REG-03
+  version: "1.0.0"
+
+servers:
+  - url: "http://localhost:3000/api/v1/mock"
+    description: "Mock API v1 (canonical) — endpoint internal backend-api"
+  - url: "http://localhost:3000/mock"
+    description: "Mock API legacy alias (deprecated, transisi hingga 2026-04-30)"
+
+paths:
+  # ─────────────────────────────────────────────────────────────
+  # Mock PIHPS — Sistem Informasi Harga dan Produksi Hortikultura
+  # ─────────────────────────────────────────────────────────────
+  /pihps/prices:
+    get:
+      summary: "[MOCK] Data harga komoditas dari PIHPS"
+      operationId: "mockGetPihpsPrices"
+      description: |
+        Mengembalikan data harga komoditas dari dataset mock JSON statis.
+        Skema respons identik dengan PIHPS aktual.
+        Data file: `backend-api/src/mock/data/commodity-prices.json`
+      parameters:
+        - name: "commodityCode"
+          in: "query"
+          required: true
+          schema:
+            type: "string"
+            enum: ["CABAI_RAWIT", "BAWANG_MERAH", "JAGUNG"]
+        - name: "regionCode"
+          in: "query"
+          required: true
+          schema:
+            type: "string"
+            enum: ["JKT", "MKS", "SBY"]
+        - name: "startDate"
+          in: "query"
+          required: false
+          schema:
+            type: "string"
+            format: "date"
+        - name: "endDate"
+          in: "query"
+          required: false
+          schema:
+            type: "string"
+            format: "date"
+      responses:
+        "200":
+          description: "Data harga mock berhasil diambil"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PIHPSPriceListResponse"
+              example:
+                metadata:
+                  source: "MOCK"
+                  commodity: "CABAI_RAWIT"
+                  region: "JKT"
+                  record_count: 30
+                  data_label: "assumed-data"
+                data:
+                  - date: "2026-02-15"
+                    price: 45000
+                    unit: "IDR/KG"
+                    quality: "NORMAL"
+                  - date: "2026-02-16"
+                    price: 46500
+                    unit: "IDR/KG"
+                    quality: "NORMAL"
+        "400":
+          description: "Parameter tidak valid"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MockErrorResponse"
+        "404":
+          description: "Komoditas atau wilayah tidak ditemukan dalam dataset mock"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MockErrorResponse"
+
+  /pihps/prices/{commodityCode}/latest:
+    get:
+      summary: "[MOCK] Harga terbaru komoditas"
+      operationId: "mockGetLatestPrice"
+      parameters:
+        - name: "commodityCode"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+        - name: "regionCode"
+          in: "query"
+          required: true
+          schema:
+            type: "string"
+      responses:
+        "200":
+          description: "Harga terbaru berhasil diambil"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PIHPSLatestPriceResponse"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  # ─────────────────────────────────────────────────────────────
+  # Mock IASC OJK — Infrastruktur Audit dan Supervisi Cicilan
+  # ─────────────────────────────────────────────────────────────
+  /iasc/verify/{referenceId}:
+    get:
+      summary: "[MOCK] Verifikasi rekam jejak IASC OJK"
+      operationId: "mockVerifyIASC"
+      description: |
+        Mengembalikan status verifikasi rekam jejak dari dataset mock.
+        Perilaku deterministik berdasarkan referenceId:
+        - referenceId berakhir dengan digit genap → status: "verified"
+        - referenceId berakhir dengan digit ganjil → status: "pending"
+        - referenceId dengan prefix "INVALID" → status: "failed"
+        
+        Edge Case: status "pending" disertai retry_after field (AC-REG-03)
+      parameters:
+        - name: "referenceId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+        - name: "entityType"
+          in: "query"
+          required: false
+          schema:
+            type: "string"
+            enum: ["HARVEST_ASSET", "FINANCING_APPLICATION"]
+      responses:
+        "200":
+          description: "Respons verifikasi IASC"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IASCVerifyResponse"
+              examples:
+                verified:
+                  summary: "Verifikasi sukses"
+                  value:
+                    reference_id: "IASC-2026-0002"
+                    verification_status: "verified"
+                    verification_ts: "2026-03-17T08:00:00Z"
+                    proof_hash: "sha256-abc123def456..."
+                    source: "MOCK"
+                    correlation_id: "GARUDA-550e8400-e29b-41d4-a716-446655440002"
+                pending:
+                  summary: "Verifikasi pending (Edge Case)"
+                  value:
+                    reference_id: "IASC-2026-0003"
+                    verification_status: "pending"
+                    verification_ts: null
+                    proof_hash: null
+                    retry_after_seconds: 300
+                    source: "MOCK"
+                    correlation_id: "GARUDA-550e8400-e29b-41d4-a716-446655440003"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /iasc/traces:
+    post:
+      summary: "[MOCK] Daftarkan rekam jejak IASC baru"
+      operationId: "mockRegisterTrace"
+      description: "Simulasi pendaftaran entitas ke sistem rekam jejak IASC OJK"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/IASCRegisterRequest"
+      responses:
+        "201":
+          description: "Rekam jejak berhasil didaftarkan"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IASCRegisterResponse"
+
+  # ─────────────────────────────────────────────────────────────
+  # Mock Health & Status
+  # ─────────────────────────────────────────────────────────────
+  /health:
+    get:
+      summary: "[MOCK] Status Mock-API"
+      operationId: "mockHealth"
+      responses:
+        "200":
+          description: "Mock API aktif"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  status:
+                    type: "string"
+                    example: "active"
+                  mode:
+                    type: "string"
+                    example: "MOCK"
+                  dataset_coverage:
+                    type: "object"
+                    properties:
+                      commodities:
+                        type: "array"
+                        items:
+                          type: "string"
+                        example: ["CABAI_RAWIT", "BAWANG_MERAH", "JAGUNG"]
+                      regions:
+                        type: "array"
+                        items:
+                          type: "string"
+                        example: ["JKT", "MKS", "SBY"]
+                      history_days:
+                        type: "integer"
+                        example: 30
+                      iasc_sample_records:
+                        type: "integer"
+                        example: 10
+
+components:
+  schemas:
+    PIHPSPriceListResponse:
+      type: "object"
+      required: ["metadata", "data"]
+      properties:
+        metadata:
+          type: "object"
+          properties:
+            source:
+              type: "string"
+              enum: ["PIHPS", "MOCK"]
+            commodity:
+              type: "string"
+            region:
+              type: "string"
+            record_count:
+              type: "integer"
+            data_label:
+              type: "string"
+              description: "\"assumed-data\" jika data berasal dari mock (Assumptions spec)"
+        data:
+          type: "array"
+          items:
+            type: "object"
+            required: ["date", "price", "unit"]
+            properties:
+              date:
+                type: "string"
+                format: "date"
+              price:
+                type: "number"
+                description: "Harga dalam IDR per kg"
+              unit:
+                type: "string"
+                example: "IDR/KG"
+              quality:
+                type: "string"
+                enum: ["NORMAL", "SUSPECT", "OUTLIER"]
+              anomaly:
+                type: "boolean"
+
+    PIHPSLatestPriceResponse:
+      type: "object"
+      properties:
+        commodity_code:
+          type: "string"
+        region_code:
+          type: "string"
+        latest_price:
+          type: "number"
+        unit:
+          type: "string"
+        recorded_date:
+          type: "string"
+          format: "date"
+        source:
+          type: "string"
+          enum: ["PIHPS", "MOCK"]
+
+    IASCVerifyResponse:
+      type: "object"
+      required: ["reference_id", "verification_status", "source"]
+      properties:
+        reference_id:
+          type: "string"
+        verification_status:
+          type: "string"
+          enum: ["verified", "pending", "failed"]
+        verification_ts:
+          type: "string"
+          format: "date-time"
+          nullable: true
+        proof_hash:
+          type: "string"
+          nullable: true
+          description: "Hash bukti verifikasi — null jika pending/failed"
+        retry_after_seconds:
+          type: "integer"
+          nullable: true
+          description: "Batas waktu retry jika status pending (Edge Case spec)"
+        source:
+          type: "string"
+          example: "MOCK"
+        correlation_id:
+          type: "string"
+
+    IASCRegisterRequest:
+      type: "object"
+      required: ["entity_type", "entity_id", "correlation_id"]
+      properties:
+        entity_type:
+          type: "string"
+          enum: ["HARVEST_ASSET", "FINANCING_APPLICATION"]
+        entity_id:
+          type: "string"
+          format: "uuid"
+        metadata:
+          type: "object"
+          description: "Data konteks entitas (komoditas, nilai, tanggal)"
+        correlation_id:
+          type: "string"
+
+    IASCRegisterResponse:
+      type: "object"
+      properties:
+        reference_id:
+          type: "string"
+          description: "ID rekam jejak IASC yang dapat digunakan untuk verifikasi"
+        status:
+          type: "string"
+          example: "registered"
+        estimated_verification_seconds:
+          type: "integer"
+          example: 60
+        correlation_id:
+          type: "string"
+
+    MockErrorResponse:
+      type: "object"
+      properties:
+        error_code:
+          type: "string"
+        message:
+          type: "string"
+        source:
+          type: "string"
+          example: "MOCK"
+
+  responses:
+    NotFound:
+      description: "Data tidak ditemukan dalam dataset mock"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/MockErrorResponse"
+
+# ─────────────────────────────────────────────────────────────────
+# Catatan Implementasi Mock-API
+# ─────────────────────────────────────────────────────────────────
+# 
+# File data mock:
+# - backend-api/src/mock/data/commodity-prices.json
+#   Format: { "CABAI_RAWIT": { "JKT": [...30 records...], "MKS": [...], "SBY": [...] }, ... }
+#
+# - backend-api/src/mock/data/iasc-traces.json
+#   Format: [{ "reference_id": "IASC-2026-0001", "status": "verified", ... }, ...]
+#
+# Circuit Breaker Policy (FR-008, NFR-003):
+# - Jika PIHPS aktual timeout > 3s → otomatis beralih ke mock PIHPS
+# - Jika IASC aktual timeout > 5s → otomatis beralih ke mock IASC
+# - Header respons: X-Fallback: mock (menandai bahwa mock aktif)
+# - Semua respons mock menyertakan "source": "MOCK" di body
+#
+# Validasi semantik equivalence:
+# - Mock response schema HARUS SAMA dengan response aktual (test: contracts/contract-test.js)
+# - Kode status HTTP HARUS SAMA
+# - Error codes HARUS SAMA

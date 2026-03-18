@@ -31,7 +31,16 @@
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+- Gate 1 - Anti-Vibe Coding: Plan MUST reference approved requirement IDs,
+  measurable acceptance criteria, and traceability path to tasks and tests.
+- Gate 2 - Regulatory Compliance: Plan MUST define SNAP BI security controls and
+  AES-256 data protection controls with verifiable evidence points.
+- Gate 3 - Hybrid Architecture: Plan MUST separate AI and DLT modules, define
+  interface contracts, ownership boundaries, and integration controls.
+- Gate 4 - PoC Focus: Plan MUST constrain scope to a stable small-scale Mock-API
+  demo path with explicit non-goals and stability criteria.
+- Gate Decision Rule: Any failed gate blocks progression until corrected and
+  re-reviewed.
 
 ## Project Structure
 

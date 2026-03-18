@@ -95,6 +95,32 @@
 - **FR-006**: System MUST authenticate users via [NEEDS CLARIFICATION: auth method not specified - email/password, SSO, OAuth?]
 - **FR-007**: System MUST retain user data for [NEEDS CLARIFICATION: retention period not specified]
 
+### Compliance & Security Requirements *(mandatory)*
+
+- **CR-001**: API design and implementation MUST map to applicable SNAP BI
+  security controls.
+- **CR-002**: Personal data at rest MUST be encrypted using AES-256 (or equivalent
+  cryptographic strength with explicit approval).
+- **CR-003**: The specification MUST state evidence artifacts for compliance
+  verification (config, test output, logs, or review checklist).
+
+### Hybrid Architecture Constraints *(mandatory)*
+
+- **HA-001**: AI module (Python/TensorFlow) and DLT module
+  (Solidity/Hyperledger) MUST be defined as separate bounded contexts.
+- **HA-002**: Inter-module communication MUST use a documented interface contract
+  (API/schema/event) with versioning and error semantics.
+- **HA-003**: Direct cross-module coupling outside approved contracts MUST be
+  prohibited.
+
+### Traceability Matrix *(mandatory)*
+
+| Requirement ID | Acceptance Criteria ID | Design Component | Task ID | Test Case ID |
+|----------------|------------------------|------------------|---------|--------------|
+| FR/CR/HA-XXX   | AC-XXX                 | [component]      | TXXX    | TC-XXX       |
+
+Every approved requirement MUST appear in this matrix before implementation.
+
 ### Key Entities *(include if feature involves data)*
 
 - **[Entity 1]**: [What it represents, key attributes without implementation]
@@ -113,3 +139,10 @@
 - **SC-002**: [Measurable metric, e.g., "System handles 1000 concurrent users without degradation"]
 - **SC-003**: [User satisfaction metric, e.g., "90% of users successfully complete primary task on first attempt"]
 - **SC-004**: [Business metric, e.g., "Reduce support tickets related to [X] by 50%"]
+
+### PoC Stability Outcomes *(mandatory for hackathon scope)*
+
+- **PSC-001**: The primary Mock-API demo flow completes successfully in three
+  consecutive runs in the same environment.
+- **PSC-002**: Error responses for demo-critical endpoints are deterministic and
+  follow a documented schema.

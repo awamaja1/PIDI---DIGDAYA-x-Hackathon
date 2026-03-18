@@ -1,0 +1,16 @@
+{
+  "name": "garuda-link-backend-api",
+  "version": "0.1.0",
+  "private": true,
+  "description": "PoC API Gateway GARUDA-LINK",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "verify:mock": "powershell -ExecutionPolicy Bypass -File scripts/verify-mock-local.ps1"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.21.2"
+  }
+}

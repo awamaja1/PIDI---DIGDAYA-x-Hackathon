@@ -1,0 +1,26 @@
+[
+  {
+    "referenceId": "IASC-REF-0001",
+    "verified": true,
+    "riskScore": 22,
+    "category": "LOW",
+    "notes": "Riwayat logistik dan pembiayaan konsisten",
+    "updatedAt": "2026-03-17T08:00:00.000Z"
+  },
+  {
+    "referenceId": "IASC-REF-0002",
+    "verified": true,
+    "riskScore": 48,
+    "category": "MEDIUM",
+    "notes": "Perlu monitoring siklus panen berikutnya",
+    "updatedAt": "2026-03-17T08:05:00.000Z"
+  },
+  {
+    "referenceId": "IASC-REF-0003",
+    "verified": false,
+    "riskScore": 75,
+    "category": "HIGH",
+    "notes": "Dokumen rekam jejak tidak lengkap",
+    "updatedAt": "2026-03-17T08:10:00.000Z"
+  }
+]

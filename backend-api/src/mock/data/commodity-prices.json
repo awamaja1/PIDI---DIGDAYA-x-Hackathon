@@ -1,0 +1,2432 @@
+﻿[
+    {
+        "commodity":  "BERAS",
+        "region":  "JABAR",
+        "date":  "2026-02-16",
+        "price":  12600,
+        "stock":  550,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATENG",
+        "date":  "2026-02-16",
+        "price":  12601,
+        "stock":  551,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATIM",
+        "date":  "2026-02-16",
+        "price":  12602,
+        "stock":  552,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JABAR",
+        "date":  "2026-02-16",
+        "price":  6910,
+        "stock":  560,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATENG",
+        "date":  "2026-02-16",
+        "price":  6911,
+        "stock":  561,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATIM",
+        "date":  "2026-02-16",
+        "price":  6912,
+        "stock":  562,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JABAR",
+        "date":  "2026-02-16",
+        "price":  40440,
+        "stock":  450,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATENG",
+        "date":  "2026-02-16",
+        "price":  40442,
+        "stock":  451,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATIM",
+        "date":  "2026-02-16",
+        "price":  40444,
+        "stock":  452,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JABAR",
+        "date":  "2026-02-17",
+        "price":  12700,
+        "stock":  530,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATENG",
+        "date":  "2026-02-17",
+        "price":  12701,
+        "stock":  531,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATIM",
+        "date":  "2026-02-17",
+        "price":  12702,
+        "stock":  532,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JABAR",
+        "date":  "2026-02-17",
+        "price":  7010,
+        "stock":  540,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATENG",
+        "date":  "2026-02-17",
+        "price":  7011,
+        "stock":  541,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATIM",
+        "date":  "2026-02-17",
+        "price":  7012,
+        "stock":  542,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JABAR",
+        "date":  "2026-02-17",
+        "price":  40640,
+        "stock":  550,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATENG",
+        "date":  "2026-02-17",
+        "price":  40642,
+        "stock":  551,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATIM",
+        "date":  "2026-02-17",
+        "price":  40644,
+        "stock":  552,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JABAR",
+        "date":  "2026-02-18",
+        "price":  12800,
+        "stock":  510,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATENG",
+        "date":  "2026-02-18",
+        "price":  12801,
+        "stock":  511,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATIM",
+        "date":  "2026-02-18",
+        "price":  12802,
+        "stock":  512,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JABAR",
+        "date":  "2026-02-18",
+        "price":  7110,
+        "stock":  520,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATENG",
+        "date":  "2026-02-18",
+        "price":  7111,
+        "stock":  521,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATIM",
+        "date":  "2026-02-18",
+        "price":  7112,
+        "stock":  522,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JABAR",
+        "date":  "2026-02-18",
+        "price":  40840,
+        "stock":  530,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATENG",
+        "date":  "2026-02-18",
+        "price":  40842,
+        "stock":  531,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATIM",
+        "date":  "2026-02-18",
+        "price":  40844,
+        "stock":  532,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JABAR",
+        "date":  "2026-02-19",
+        "price":  12900,
+        "stock":  490,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATENG",
+        "date":  "2026-02-19",
+        "price":  12901,
+        "stock":  491,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATIM",
+        "date":  "2026-02-19",
+        "price":  12902,
+        "stock":  492,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JABAR",
+        "date":  "2026-02-19",
+        "price":  7210,
+        "stock":  500,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATENG",
+        "date":  "2026-02-19",
+        "price":  7211,
+        "stock":  501,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATIM",
+        "date":  "2026-02-19",
+        "price":  7212,
+        "stock":  502,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JABAR",
+        "date":  "2026-02-19",
+        "price":  41040,
+        "stock":  510,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATENG",
+        "date":  "2026-02-19",
+        "price":  41042,
+        "stock":  511,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATIM",
+        "date":  "2026-02-19",
+        "price":  41044,
+        "stock":  512,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JABAR",
+        "date":  "2026-02-20",
+        "price":  13000,
+        "stock":  470,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATENG",
+        "date":  "2026-02-20",
+        "price":  13001,
+        "stock":  471,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATIM",
+        "date":  "2026-02-20",
+        "price":  13002,
+        "stock":  472,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JABAR",
+        "date":  "2026-02-20",
+        "price":  7310,
+        "stock":  480,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATENG",
+        "date":  "2026-02-20",
+        "price":  7311,
+        "stock":  481,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATIM",
+        "date":  "2026-02-20",
+        "price":  7312,
+        "stock":  482,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JABAR",
+        "date":  "2026-02-20",
+        "price":  41240,
+        "stock":  490,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATENG",
+        "date":  "2026-02-20",
+        "price":  41242,
+        "stock":  491,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATIM",
+        "date":  "2026-02-20",
+        "price":  41244,
+        "stock":  492,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JABAR",
+        "date":  "2026-02-21",
+        "price":  13100,
+        "stock":  450,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATENG",
+        "date":  "2026-02-21",
+        "price":  13101,
+        "stock":  451,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATIM",
+        "date":  "2026-02-21",
+        "price":  13102,
+        "stock":  452,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JABAR",
+        "date":  "2026-02-21",
+        "price":  7410,
+        "stock":  460,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATENG",
+        "date":  "2026-02-21",
+        "price":  7411,
+        "stock":  461,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATIM",
+        "date":  "2026-02-21",
+        "price":  7412,
+        "stock":  462,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JABAR",
+        "date":  "2026-02-21",
+        "price":  41440,
+        "stock":  470,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATENG",
+        "date":  "2026-02-21",
+        "price":  41442,
+        "stock":  471,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATIM",
+        "date":  "2026-02-21",
+        "price":  41444,
+        "stock":  472,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JABAR",
+        "date":  "2026-02-22",
+        "price":  13200,
+        "stock":  550,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATENG",
+        "date":  "2026-02-22",
+        "price":  13201,
+        "stock":  551,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATIM",
+        "date":  "2026-02-22",
+        "price":  13202,
+        "stock":  552,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JABAR",
+        "date":  "2026-02-22",
+        "price":  7510,
+        "stock":  560,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATENG",
+        "date":  "2026-02-22",
+        "price":  7511,
+        "stock":  561,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATIM",
+        "date":  "2026-02-22",
+        "price":  7512,
+        "stock":  562,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JABAR",
+        "date":  "2026-02-22",
+        "price":  41640,
+        "stock":  450,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATENG",
+        "date":  "2026-02-22",
+        "price":  41642,
+        "stock":  451,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATIM",
+        "date":  "2026-02-22",
+        "price":  41644,
+        "stock":  452,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JABAR",
+        "date":  "2026-02-23",
+        "price":  13300,
+        "stock":  530,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATENG",
+        "date":  "2026-02-23",
+        "price":  13301,
+        "stock":  531,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATIM",
+        "date":  "2026-02-23",
+        "price":  13302,
+        "stock":  532,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JABAR",
+        "date":  "2026-02-23",
+        "price":  7610,
+        "stock":  540,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATENG",
+        "date":  "2026-02-23",
+        "price":  7611,
+        "stock":  541,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATIM",
+        "date":  "2026-02-23",
+        "price":  7612,
+        "stock":  542,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JABAR",
+        "date":  "2026-02-23",
+        "price":  41840,
+        "stock":  550,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATENG",
+        "date":  "2026-02-23",
+        "price":  41842,
+        "stock":  551,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATIM",
+        "date":  "2026-02-23",
+        "price":  41844,
+        "stock":  552,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JABAR",
+        "date":  "2026-02-24",
+        "price":  13400,
+        "stock":  510,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATENG",
+        "date":  "2026-02-24",
+        "price":  13401,
+        "stock":  511,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATIM",
+        "date":  "2026-02-24",
+        "price":  13402,
+        "stock":  512,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JABAR",
+        "date":  "2026-02-24",
+        "price":  7710,
+        "stock":  520,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATENG",
+        "date":  "2026-02-24",
+        "price":  7711,
+        "stock":  521,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATIM",
+        "date":  "2026-02-24",
+        "price":  7712,
+        "stock":  522,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JABAR",
+        "date":  "2026-02-24",
+        "price":  42040,
+        "stock":  530,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATENG",
+        "date":  "2026-02-24",
+        "price":  42042,
+        "stock":  531,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATIM",
+        "date":  "2026-02-24",
+        "price":  42044,
+        "stock":  532,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JABAR",
+        "date":  "2026-02-25",
+        "price":  13500,
+        "stock":  490,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATENG",
+        "date":  "2026-02-25",
+        "price":  13501,
+        "stock":  491,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATIM",
+        "date":  "2026-02-25",
+        "price":  13502,
+        "stock":  492,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JABAR",
+        "date":  "2026-02-25",
+        "price":  7810,
+        "stock":  500,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATENG",
+        "date":  "2026-02-25",
+        "price":  7811,
+        "stock":  501,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATIM",
+        "date":  "2026-02-25",
+        "price":  7812,
+        "stock":  502,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JABAR",
+        "date":  "2026-02-25",
+        "price":  42240,
+        "stock":  510,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATENG",
+        "date":  "2026-02-25",
+        "price":  42242,
+        "stock":  511,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATIM",
+        "date":  "2026-02-25",
+        "price":  42244,
+        "stock":  512,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JABAR",
+        "date":  "2026-02-26",
+        "price":  13600,
+        "stock":  470,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATENG",
+        "date":  "2026-02-26",
+        "price":  13601,
+        "stock":  471,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATIM",
+        "date":  "2026-02-26",
+        "price":  13602,
+        "stock":  472,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JABAR",
+        "date":  "2026-02-26",
+        "price":  7910,
+        "stock":  480,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATENG",
+        "date":  "2026-02-26",
+        "price":  7911,
+        "stock":  481,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATIM",
+        "date":  "2026-02-26",
+        "price":  7912,
+        "stock":  482,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JABAR",
+        "date":  "2026-02-26",
+        "price":  42440,
+        "stock":  490,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATENG",
+        "date":  "2026-02-26",
+        "price":  42442,
+        "stock":  491,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATIM",
+        "date":  "2026-02-26",
+        "price":  42444,
+        "stock":  492,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JABAR",
+        "date":  "2026-02-27",
+        "price":  13700,
+        "stock":  450,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATENG",
+        "date":  "2026-02-27",
+        "price":  13701,
+        "stock":  451,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATIM",
+        "date":  "2026-02-27",
+        "price":  13702,
+        "stock":  452,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JABAR",
+        "date":  "2026-02-27",
+        "price":  8010,
+        "stock":  460,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATENG",
+        "date":  "2026-02-27",
+        "price":  8011,
+        "stock":  461,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATIM",
+        "date":  "2026-02-27",
+        "price":  8012,
+        "stock":  462,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JABAR",
+        "date":  "2026-02-27",
+        "price":  42640,
+        "stock":  470,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATENG",
+        "date":  "2026-02-27",
+        "price":  42642,
+        "stock":  471,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATIM",
+        "date":  "2026-02-27",
+        "price":  42644,
+        "stock":  472,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JABAR",
+        "date":  "2026-02-28",
+        "price":  13800,
+        "stock":  550,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATENG",
+        "date":  "2026-02-28",
+        "price":  13801,
+        "stock":  551,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATIM",
+        "date":  "2026-02-28",
+        "price":  13802,
+        "stock":  552,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JABAR",
+        "date":  "2026-02-28",
+        "price":  8110,
+        "stock":  560,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATENG",
+        "date":  "2026-02-28",
+        "price":  8111,
+        "stock":  561,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATIM",
+        "date":  "2026-02-28",
+        "price":  8112,
+        "stock":  562,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JABAR",
+        "date":  "2026-02-28",
+        "price":  42840,
+        "stock":  450,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATENG",
+        "date":  "2026-02-28",
+        "price":  42842,
+        "stock":  451,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATIM",
+        "date":  "2026-02-28",
+        "price":  42844,
+        "stock":  452,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JABAR",
+        "date":  "2026-03-01",
+        "price":  13900,
+        "stock":  530,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATENG",
+        "date":  "2026-03-01",
+        "price":  13901,
+        "stock":  531,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATIM",
+        "date":  "2026-03-01",
+        "price":  13902,
+        "stock":  532,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JABAR",
+        "date":  "2026-03-01",
+        "price":  8210,
+        "stock":  540,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATENG",
+        "date":  "2026-03-01",
+        "price":  8211,
+        "stock":  541,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATIM",
+        "date":  "2026-03-01",
+        "price":  8212,
+        "stock":  542,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JABAR",
+        "date":  "2026-03-01",
+        "price":  43040,
+        "stock":  550,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATENG",
+        "date":  "2026-03-01",
+        "price":  43042,
+        "stock":  551,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATIM",
+        "date":  "2026-03-01",
+        "price":  43044,
+        "stock":  552,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JABAR",
+        "date":  "2026-03-02",
+        "price":  14000,
+        "stock":  510,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATENG",
+        "date":  "2026-03-02",
+        "price":  14001,
+        "stock":  511,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATIM",
+        "date":  "2026-03-02",
+        "price":  14002,
+        "stock":  512,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JABAR",
+        "date":  "2026-03-02",
+        "price":  8310,
+        "stock":  520,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATENG",
+        "date":  "2026-03-02",
+        "price":  8311,
+        "stock":  521,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATIM",
+        "date":  "2026-03-02",
+        "price":  8312,
+        "stock":  522,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JABAR",
+        "date":  "2026-03-02",
+        "price":  43240,
+        "stock":  530,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATENG",
+        "date":  "2026-03-02",
+        "price":  43242,
+        "stock":  531,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATIM",
+        "date":  "2026-03-02",
+        "price":  43244,
+        "stock":  532,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JABAR",
+        "date":  "2026-03-03",
+        "price":  14100,
+        "stock":  490,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATENG",
+        "date":  "2026-03-03",
+        "price":  14101,
+        "stock":  491,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATIM",
+        "date":  "2026-03-03",
+        "price":  14102,
+        "stock":  492,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JABAR",
+        "date":  "2026-03-03",
+        "price":  8410,
+        "stock":  500,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATENG",
+        "date":  "2026-03-03",
+        "price":  8411,
+        "stock":  501,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATIM",
+        "date":  "2026-03-03",
+        "price":  8412,
+        "stock":  502,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JABAR",
+        "date":  "2026-03-03",
+        "price":  43440,
+        "stock":  510,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATENG",
+        "date":  "2026-03-03",
+        "price":  43442,
+        "stock":  511,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATIM",
+        "date":  "2026-03-03",
+        "price":  43444,
+        "stock":  512,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JABAR",
+        "date":  "2026-03-04",
+        "price":  14200,
+        "stock":  470,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATENG",
+        "date":  "2026-03-04",
+        "price":  14201,
+        "stock":  471,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATIM",
+        "date":  "2026-03-04",
+        "price":  14202,
+        "stock":  472,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JABAR",
+        "date":  "2026-03-04",
+        "price":  8510,
+        "stock":  480,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATENG",
+        "date":  "2026-03-04",
+        "price":  8511,
+        "stock":  481,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATIM",
+        "date":  "2026-03-04",
+        "price":  8512,
+        "stock":  482,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JABAR",
+        "date":  "2026-03-04",
+        "price":  43640,
+        "stock":  490,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATENG",
+        "date":  "2026-03-04",
+        "price":  43642,
+        "stock":  491,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATIM",
+        "date":  "2026-03-04",
+        "price":  43644,
+        "stock":  492,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JABAR",
+        "date":  "2026-03-05",
+        "price":  14300,
+        "stock":  450,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATENG",
+        "date":  "2026-03-05",
+        "price":  14301,
+        "stock":  451,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATIM",
+        "date":  "2026-03-05",
+        "price":  14302,
+        "stock":  452,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JABAR",
+        "date":  "2026-03-05",
+        "price":  8610,
+        "stock":  460,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATENG",
+        "date":  "2026-03-05",
+        "price":  8611,
+        "stock":  461,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATIM",
+        "date":  "2026-03-05",
+        "price":  8612,
+        "stock":  462,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JABAR",
+        "date":  "2026-03-05",
+        "price":  43840,
+        "stock":  470,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATENG",
+        "date":  "2026-03-05",
+        "price":  43842,
+        "stock":  471,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATIM",
+        "date":  "2026-03-05",
+        "price":  43844,
+        "stock":  472,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JABAR",
+        "date":  "2026-03-06",
+        "price":  14400,
+        "stock":  550,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATENG",
+        "date":  "2026-03-06",
+        "price":  14401,
+        "stock":  551,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATIM",
+        "date":  "2026-03-06",
+        "price":  14402,
+        "stock":  552,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JABAR",
+        "date":  "2026-03-06",
+        "price":  8710,
+        "stock":  560,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATENG",
+        "date":  "2026-03-06",
+        "price":  8711,
+        "stock":  561,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATIM",
+        "date":  "2026-03-06",
+        "price":  8712,
+        "stock":  562,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JABAR",
+        "date":  "2026-03-06",
+        "price":  44040,
+        "stock":  450,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATENG",
+        "date":  "2026-03-06",
+        "price":  44042,
+        "stock":  451,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATIM",
+        "date":  "2026-03-06",
+        "price":  44044,
+        "stock":  452,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JABAR",
+        "date":  "2026-03-07",
+        "price":  14500,
+        "stock":  530,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATENG",
+        "date":  "2026-03-07",
+        "price":  14501,
+        "stock":  531,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATIM",
+        "date":  "2026-03-07",
+        "price":  14502,
+        "stock":  532,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JABAR",
+        "date":  "2026-03-07",
+        "price":  8810,
+        "stock":  540,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATENG",
+        "date":  "2026-03-07",
+        "price":  8811,
+        "stock":  541,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATIM",
+        "date":  "2026-03-07",
+        "price":  8812,
+        "stock":  542,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JABAR",
+        "date":  "2026-03-07",
+        "price":  44240,
+        "stock":  550,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATENG",
+        "date":  "2026-03-07",
+        "price":  44242,
+        "stock":  551,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATIM",
+        "date":  "2026-03-07",
+        "price":  44244,
+        "stock":  552,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JABAR",
+        "date":  "2026-03-08",
+        "price":  14600,
+        "stock":  510,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATENG",
+        "date":  "2026-03-08",
+        "price":  14601,
+        "stock":  511,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATIM",
+        "date":  "2026-03-08",
+        "price":  14602,
+        "stock":  512,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JABAR",
+        "date":  "2026-03-08",
+        "price":  8910,
+        "stock":  520,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATENG",
+        "date":  "2026-03-08",
+        "price":  8911,
+        "stock":  521,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATIM",
+        "date":  "2026-03-08",
+        "price":  8912,
+        "stock":  522,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JABAR",
+        "date":  "2026-03-08",
+        "price":  44440,
+        "stock":  530,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATENG",
+        "date":  "2026-03-08",
+        "price":  44442,
+        "stock":  531,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATIM",
+        "date":  "2026-03-08",
+        "price":  44444,
+        "stock":  532,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JABAR",
+        "date":  "2026-03-09",
+        "price":  14700,
+        "stock":  490,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATENG",
+        "date":  "2026-03-09",
+        "price":  14701,
+        "stock":  491,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATIM",
+        "date":  "2026-03-09",
+        "price":  14702,
+        "stock":  492,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JABAR",
+        "date":  "2026-03-09",
+        "price":  9010,
+        "stock":  500,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATENG",
+        "date":  "2026-03-09",
+        "price":  9011,
+        "stock":  501,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATIM",
+        "date":  "2026-03-09",
+        "price":  9012,
+        "stock":  502,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JABAR",
+        "date":  "2026-03-09",
+        "price":  44640,
+        "stock":  510,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATENG",
+        "date":  "2026-03-09",
+        "price":  44642,
+        "stock":  511,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATIM",
+        "date":  "2026-03-09",
+        "price":  44644,
+        "stock":  512,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JABAR",
+        "date":  "2026-03-10",
+        "price":  14800,
+        "stock":  470,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATENG",
+        "date":  "2026-03-10",
+        "price":  14801,
+        "stock":  471,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATIM",
+        "date":  "2026-03-10",
+        "price":  14802,
+        "stock":  472,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JABAR",
+        "date":  "2026-03-10",
+        "price":  9110,
+        "stock":  480,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATENG",
+        "date":  "2026-03-10",
+        "price":  9111,
+        "stock":  481,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATIM",
+        "date":  "2026-03-10",
+        "price":  9112,
+        "stock":  482,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JABAR",
+        "date":  "2026-03-10",
+        "price":  44840,
+        "stock":  490,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATENG",
+        "date":  "2026-03-10",
+        "price":  44842,
+        "stock":  491,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATIM",
+        "date":  "2026-03-10",
+        "price":  44844,
+        "stock":  492,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JABAR",
+        "date":  "2026-03-11",
+        "price":  14900,
+        "stock":  450,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATENG",
+        "date":  "2026-03-11",
+        "price":  14901,
+        "stock":  451,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATIM",
+        "date":  "2026-03-11",
+        "price":  14902,
+        "stock":  452,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JABAR",
+        "date":  "2026-03-11",
+        "price":  9210,
+        "stock":  460,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATENG",
+        "date":  "2026-03-11",
+        "price":  9211,
+        "stock":  461,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATIM",
+        "date":  "2026-03-11",
+        "price":  9212,
+        "stock":  462,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JABAR",
+        "date":  "2026-03-11",
+        "price":  45040,
+        "stock":  470,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATENG",
+        "date":  "2026-03-11",
+        "price":  45042,
+        "stock":  471,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATIM",
+        "date":  "2026-03-11",
+        "price":  45044,
+        "stock":  472,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JABAR",
+        "date":  "2026-03-12",
+        "price":  15000,
+        "stock":  550,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATENG",
+        "date":  "2026-03-12",
+        "price":  15001,
+        "stock":  551,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATIM",
+        "date":  "2026-03-12",
+        "price":  15002,
+        "stock":  552,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JABAR",
+        "date":  "2026-03-12",
+        "price":  9310,
+        "stock":  560,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATENG",
+        "date":  "2026-03-12",
+        "price":  9311,
+        "stock":  561,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATIM",
+        "date":  "2026-03-12",
+        "price":  9312,
+        "stock":  562,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JABAR",
+        "date":  "2026-03-12",
+        "price":  45240,
+        "stock":  450,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATENG",
+        "date":  "2026-03-12",
+        "price":  45242,
+        "stock":  451,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATIM",
+        "date":  "2026-03-12",
+        "price":  45244,
+        "stock":  452,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JABAR",
+        "date":  "2026-03-13",
+        "price":  15100,
+        "stock":  530,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATENG",
+        "date":  "2026-03-13",
+        "price":  15101,
+        "stock":  531,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATIM",
+        "date":  "2026-03-13",
+        "price":  15102,
+        "stock":  532,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JABAR",
+        "date":  "2026-03-13",
+        "price":  9410,
+        "stock":  540,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATENG",
+        "date":  "2026-03-13",
+        "price":  9411,
+        "stock":  541,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATIM",
+        "date":  "2026-03-13",
+        "price":  9412,
+        "stock":  542,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JABAR",
+        "date":  "2026-03-13",
+        "price":  45440,
+        "stock":  550,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATENG",
+        "date":  "2026-03-13",
+        "price":  45442,
+        "stock":  551,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATIM",
+        "date":  "2026-03-13",
+        "price":  45444,
+        "stock":  552,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JABAR",
+        "date":  "2026-03-14",
+        "price":  15200,
+        "stock":  510,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATENG",
+        "date":  "2026-03-14",
+        "price":  15201,
+        "stock":  511,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATIM",
+        "date":  "2026-03-14",
+        "price":  15202,
+        "stock":  512,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JABAR",
+        "date":  "2026-03-14",
+        "price":  9510,
+        "stock":  520,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATENG",
+        "date":  "2026-03-14",
+        "price":  9511,
+        "stock":  521,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATIM",
+        "date":  "2026-03-14",
+        "price":  9512,
+        "stock":  522,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JABAR",
+        "date":  "2026-03-14",
+        "price":  45640,
+        "stock":  530,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATENG",
+        "date":  "2026-03-14",
+        "price":  45642,
+        "stock":  531,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATIM",
+        "date":  "2026-03-14",
+        "price":  45644,
+        "stock":  532,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JABAR",
+        "date":  "2026-03-15",
+        "price":  15300,
+        "stock":  490,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATENG",
+        "date":  "2026-03-15",
+        "price":  15301,
+        "stock":  491,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATIM",
+        "date":  "2026-03-15",
+        "price":  15302,
+        "stock":  492,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JABAR",
+        "date":  "2026-03-15",
+        "price":  9610,
+        "stock":  500,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATENG",
+        "date":  "2026-03-15",
+        "price":  9611,
+        "stock":  501,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATIM",
+        "date":  "2026-03-15",
+        "price":  9612,
+        "stock":  502,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JABAR",
+        "date":  "2026-03-15",
+        "price":  45840,
+        "stock":  510,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATENG",
+        "date":  "2026-03-15",
+        "price":  45842,
+        "stock":  511,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATIM",
+        "date":  "2026-03-15",
+        "price":  45844,
+        "stock":  512,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JABAR",
+        "date":  "2026-03-16",
+        "price":  15400,
+        "stock":  470,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATENG",
+        "date":  "2026-03-16",
+        "price":  15401,
+        "stock":  471,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATIM",
+        "date":  "2026-03-16",
+        "price":  15402,
+        "stock":  472,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JABAR",
+        "date":  "2026-03-16",
+        "price":  9710,
+        "stock":  480,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATENG",
+        "date":  "2026-03-16",
+        "price":  9711,
+        "stock":  481,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATIM",
+        "date":  "2026-03-16",
+        "price":  9712,
+        "stock":  482,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JABAR",
+        "date":  "2026-03-16",
+        "price":  46040,
+        "stock":  490,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATENG",
+        "date":  "2026-03-16",
+        "price":  46042,
+        "stock":  491,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATIM",
+        "date":  "2026-03-16",
+        "price":  46044,
+        "stock":  492,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JABAR",
+        "date":  "2026-03-17",
+        "price":  15500,
+        "stock":  450,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATENG",
+        "date":  "2026-03-17",
+        "price":  15501,
+        "stock":  451,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "BERAS",
+        "region":  "JATIM",
+        "date":  "2026-03-17",
+        "price":  15502,
+        "stock":  452,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JABAR",
+        "date":  "2026-03-17",
+        "price":  9810,
+        "stock":  460,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATENG",
+        "date":  "2026-03-17",
+        "price":  9811,
+        "stock":  461,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "JAGUNG",
+        "region":  "JATIM",
+        "date":  "2026-03-17",
+        "price":  9812,
+        "stock":  462,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JABAR",
+        "date":  "2026-03-17",
+        "price":  46240,
+        "stock":  470,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATENG",
+        "date":  "2026-03-17",
+        "price":  46242,
+        "stock":  471,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    },
+    {
+        "commodity":  "CABAI",
+        "region":  "JATIM",
+        "date":  "2026-03-17",
+        "price":  46244,
+        "stock":  472,
+        "currency":  "IDR",
+        "source":  "MOCK_PIHPS"
+    }
+]
