@@ -1,0 +1,38 @@
+name: AI Engine CI
+
+on:
+  pull_request:
+    paths:
+      - "ai-engine/**"
+      - ".github/workflows/ai-engine-ci.yml"
+  push:
+    branches:
+      - main
+      - 001-define-garuda-link-baseline
+    paths:
+      - "ai-engine/**"
+      - ".github/workflows/ai-engine-ci.yml"
+
+jobs:
+  test-ai-engine:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ai-engine
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+
+      - name: Run unit tests
+        run: python -m unittest discover -s tests -p "test_*.py" -v

@@ -1,0 +1,19 @@
+# Python virtual environments
+.venv/
+venv/
+
+# Python cache/artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local runtime files
+*.log
+
+# Generated docs/diagrams to keep code branch clean
+docs/diagram/
+docs/*.pdf
+docs/*.pptx
