@@ -16,3 +16,4 @@ __pycache__/
 # Generated docs/diagrams to keep code branch clean
 docs/diagram/
 docs/*.pdf
+docs/*.pptx
