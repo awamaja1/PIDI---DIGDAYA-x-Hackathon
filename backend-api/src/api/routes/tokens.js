@@ -1,24 +1,20 @@
 const express = require("express");
 
-const { buildSuccessResponse } = require("../../common/responseSchema");
 const besuGatewayService = require("../../services/besuGatewayService");
+const { validateTokenizeRequest } = require("../validators/tokenizeRequest");
 
 const router = express.Router();
 
 router.post("/tokenize", async (req, res, next) => {
   try {
+    validateTokenizeRequest(req.body);
+
     const result = await besuGatewayService.tokenize({
       correlationId: req.correlationId,
       payload: req.body,
     });
 
-    return res.status(result.statusCode).json(
-      buildSuccessResponse({
-        correlationId: req.correlationId,
-        message: "Gateway tokenize response",
-        data: result.payload,
-      })
-    );
+    return res.status(result.statusCode).json(result.payload);
   } catch (error) {
     return next(error);
   }
@@ -32,13 +28,7 @@ router.patch("/:tokenId/status", async (req, res, next) => {
       payload: req.body,
     });
 
-    return res.status(result.statusCode).json(
-      buildSuccessResponse({
-        correlationId: req.correlationId,
-        message: "Gateway update status response",
-        data: result.payload,
-      })
-    );
+    return res.status(result.statusCode).json(result.payload);
   } catch (error) {
     return next(error);
   }
@@ -51,13 +41,7 @@ router.get("/:tokenId/verify", async (req, res, next) => {
       tokenId: req.params.tokenId,
     });
 
-    return res.status(result.statusCode).json(
-      buildSuccessResponse({
-        correlationId: req.correlationId,
-        message: "Gateway verify status response",
-        data: result.payload,
-      })
-    );
+    return res.status(result.statusCode).json(result.payload);
   } catch (error) {
     return next(error);
   }

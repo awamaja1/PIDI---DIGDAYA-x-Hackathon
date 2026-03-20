@@ -1,0 +1,8 @@
+[
+  {
+    "type": "function",
+    "name": "getTokenStatus",
+    "inputs": [{ "name": "tokenId", "type": "string" }],
+    "outputs": [{ "name": "status", "type": "string" }]
+  }
+]

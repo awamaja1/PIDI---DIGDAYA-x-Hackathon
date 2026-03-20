@@ -13,8 +13,8 @@ function classifyBesuFailure(error) {
   if (message.includes("abi") || message.includes("invalid argument") || code === "INVALID_ARGUMENT") {
     return {
       failureClass: "ABI_MISMATCH",
-      httpStatus: 500,
-      errorCode: "BESU_ABI_MISMATCH",
+      httpStatus: 503,
+      errorCode: "CONTRACT_ABI_MISMATCH",
     };
   }
 
@@ -27,14 +27,14 @@ function classifyBesuFailure(error) {
     return {
       failureClass: "CONNECTION_ERROR",
       httpStatus: 503,
-      errorCode: "BESU_CONNECTION_ERROR",
+      errorCode: "BESU_UNAVAILABLE",
     };
   }
 
   return {
     failureClass: "UNKNOWN",
-    httpStatus: 500,
-    errorCode: "BESU_UNKNOWN_ERROR",
+    httpStatus: 503,
+    errorCode: "BESU_UNAVAILABLE",
   };
 }
 

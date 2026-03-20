@@ -3,6 +3,7 @@ const { readAbiFile } = require("./besu/abiLoader");
 const { classifyBesuFailure } = require("./besu/failureClassifier");
 const { buildDeterministicFallback } = require("./fallback/deterministicFallback");
 const { writeAuditEvent } = require("./audit/auditStore");
+const { mintToken } = require("./besu/mintToken");
 
 function prepareContractContext() {
   const config = loadBesuConfig();
@@ -30,10 +31,34 @@ function handleGatewayFailure({ operation, correlationId, error }) {
   return fallback;
 }
 
-async function tokenize({ correlationId }) {
+async function tokenize({ correlationId, payload }) {
   try {
-    prepareContractContext();
-    throw new Error("BESU_TOKENIZE_NOT_IMPLEMENTED");
+    const config = prepareContractContext();
+    const minted = await mintToken({
+      config,
+      correlationId,
+      payload,
+    });
+
+    writeAuditEvent({
+      operation: "tokenize",
+      status: "SUCCESS",
+      correlationId,
+      txReference: minted.txReference,
+      fallbackReason: null,
+    });
+
+    return {
+      statusCode: 200,
+      payload: {
+        status: "SUCCESS",
+        correlationId,
+        txReference: minted.txReference,
+        data: {
+          tokenId: minted.tokenId,
+        },
+      },
+    };
   } catch (error) {
     return handleGatewayFailure({ operation: "tokenize", correlationId, error });
   }

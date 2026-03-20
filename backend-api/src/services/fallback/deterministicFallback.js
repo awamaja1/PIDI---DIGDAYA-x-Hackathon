@@ -1,36 +1,29 @@
+const crypto = require("crypto");
+
 const FALLBACK_BY_OPERATION = {
-  tokenize: {
-    status: "FALLBACK",
-    message: "Tokenisasi sementara menggunakan mode fallback deterministik",
-  },
-  updateStatus: {
-    status: "FALLBACK",
-    message: "Update status sementara menggunakan mode fallback deterministik",
-  },
-  verifyStatus: {
-    status: "FALLBACK",
-    message: "Verifikasi status sementara menggunakan mode fallback deterministik",
-  },
+  tokenize: "Tokenisasi sementara menggunakan mode fallback deterministik",
+  updateStatus: "Update status sementara menggunakan mode fallback deterministik",
+  verifyStatus: "Verifikasi status sementara menggunakan mode fallback deterministik",
 };
 
 function buildDeterministicFallback({ operation, classification, correlationId }) {
-  const operationPreset = FALLBACK_BY_OPERATION[operation] || {
-    status: "FALLBACK",
-    message: "Operasi menggunakan mode fallback deterministik",
-  };
+  const reason = FALLBACK_BY_OPERATION[operation] || "Operasi menggunakan mode fallback deterministik";
+  const deterministicKey = crypto
+    .createHash("sha256")
+    .update(`${operation}:${classification.failureClass}`)
+    .digest("hex")
+    .slice(0, 16);
 
   return {
     statusCode: classification.httpStatus,
     payload: {
-      operation,
-      status: operationPreset.status,
-      message: operationPreset.message,
+      status: "FALLBACK",
+      errorCode: classification.errorCode,
       correlationId,
-      error: {
-        code: classification.errorCode,
-        class: classification.failureClass,
+      fallback: {
+        reason,
+        deterministicKey,
       },
-      txReference: null,
     },
   };
 }
