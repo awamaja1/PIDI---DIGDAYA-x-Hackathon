@@ -1,0 +1,13 @@
+[
+  {
+    "type": "function",
+    "name": "mintToken",
+    "inputs": [
+      { "name": "batchId", "type": "string" },
+      { "name": "commodityCode", "type": "string" },
+      { "name": "harvestQuantityKg", "type": "uint256" },
+      { "name": "referenceValueIdr", "type": "uint256" }
+    ],
+    "outputs": [{ "name": "tokenId", "type": "uint256" }]
+  }
+]

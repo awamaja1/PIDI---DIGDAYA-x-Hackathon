@@ -7,10 +7,13 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node --watch server.js",
-    "verify:mock": "powershell -ExecutionPolicy Bypass -File scripts/verify-mock-local.ps1"
+    "verify:mock": "powershell -ExecutionPolicy Bypass -File scripts/verify-mock-local.ps1",
+    "test:contract": "node --test --test-concurrency=1 tests/contract/*.test.js",
+    "test:integration": "node --test --test-concurrency=1 tests/integration/*.test.js"
   },
   "dependencies": {
     "dotenv": "^16.4.5",
+    "ethers": "^6.16.0",
     "express": "^4.21.2"
   }
 }

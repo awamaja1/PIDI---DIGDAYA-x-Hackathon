@@ -1,8 +1,10 @@
 ﻿# PIDI - DIGDAYA x Hackathon Development Guidelines
 
-Auto-generated from all feature plans. Last updated: 2026-03-17
+Auto-generated from all feature plans. Last updated: 2026-03-20
 
 ## Active Technologies
+- Node.js 20 (backend-api), Python 3.11 (ai-engine boundary), Solidity ABI on Hyperledger Besu QBFT + express, dotenv, middleware correlation-id/error-handler/aes256; planned integration adapter ethers.js 6 (002-smart-contract-integration)
+- Structured audit artifacts (file/log based for PoC), no new DB introduced in this feature design (002-smart-contract-integration)
 
 ### Languages and Runtimes
 - **Frontend**: Node.js 20 LTS / React 18 / TypeScript 5
@@ -90,9 +92,9 @@ bash infra/scripts/demo-validate.sh 3
 - Solidity: events wajib include `correlationId` sebagai parameter
 
 ## Recent Changes
+- 002-smart-contract-integration: Added Node.js 20 (backend-api), Python 3.11 (ai-engine boundary), Solidity ABI on Hyperledger Besu QBFT + express, dotenv, middleware correlation-id/error-handler/aes256; planned integration adapter ethers.js 6
 
 - 2026-03-17: Plan PoC baseline selesai (plan.md, research.md, data-model.md, contracts/, quickstart.md)
-- Branch: `001-define-garuda-link-baseline`
 
 <!-- MANUAL ADDITIONS START -->
 <!-- MANUAL ADDITIONS END -->
