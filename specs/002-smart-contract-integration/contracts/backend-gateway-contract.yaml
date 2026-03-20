@@ -1,0 +1,213 @@
+openapi: "3.0.3"
+info:
+  title: "GARUDA-LINK Backend Gateway Contract - Smart Contract Integration"
+  version: "0.1.0"
+  description: |
+    Kontrak endpoint backend gateway untuk operasi DLT melalui Besu.
+    Seluruh operasi blockchain hanya boleh melewati backend gateway.
+    Direct AI -> DLT call dilarang oleh HA-002/HA-003.
+
+servers:
+  - url: "http://localhost:3000/api/v1"
+    description: "Local backend gateway"
+
+paths:
+  /tokens/tokenize:
+    post:
+      summary: "Mint token panen ke Besu melalui backend gateway"
+      operationId: "tokenizeHarvestAsset"
+      parameters:
+        - $ref: "#/components/parameters/CorrelationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TokenizeRequest"
+      responses:
+        "200":
+          description: "Tokenisasi sukses"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GatewaySuccessResponse"
+        "503":
+          description: "Besu unavailable -> deterministic fallback"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GatewayFallbackResponse"
+
+  /tokens/{tokenId}/status:
+    patch:
+      summary: "Update status token on-chain melalui backend gateway"
+      operationId: "updateTokenStatus"
+      parameters:
+        - name: "tokenId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+        - $ref: "#/components/parameters/CorrelationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateStatusRequest"
+      responses:
+        "200":
+          description: "Status update sukses"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GatewaySuccessResponse"
+        "404":
+          description: "Token tidak ditemukan"
+        "503":
+          description: "Besu unavailable -> deterministic fallback"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GatewayFallbackResponse"
+
+  /tokens/{tokenId}/verify:
+    get:
+      summary: "Verifikasi status token dari kontrak melalui backend gateway"
+      operationId: "verifyTokenStatus"
+      parameters:
+        - name: "tokenId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+        - $ref: "#/components/parameters/CorrelationId"
+      responses:
+        "200":
+          description: "Verifikasi status sukses"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GatewaySuccessResponse"
+        "503":
+          description: "Besu unavailable -> deterministic fallback"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GatewayFallbackResponse"
+
+  /audit/traces/{correlationId}:
+    get:
+      summary: "Ambil jejak audit end-to-end berdasarkan correlation ID"
+      operationId: "getAuditTrace"
+      parameters:
+        - name: "correlationId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            pattern: "^GARUDA-[0-9a-fA-F-]{36}$"
+      responses:
+        "200":
+          description: "Audit trace ditemukan"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuditTraceResponse"
+
+components:
+  parameters:
+    CorrelationId:
+      name: "X-Correlation-ID"
+      in: "header"
+      required: false
+      schema:
+        type: "string"
+        pattern: "^GARUDA-[0-9a-fA-F-]{36}$"
+
+  schemas:
+    TokenizeRequest:
+      type: "object"
+      required: ["batchId", "commodityCode", "harvestQuantityKg", "referenceValueIdr"]
+      properties:
+        batchId:
+          type: "string"
+        commodityCode:
+          type: "string"
+        harvestQuantityKg:
+          type: "number"
+          minimum: 0.0001
+        referenceValueIdr:
+          type: "number"
+          minimum: 1
+
+    UpdateStatusRequest:
+      type: "object"
+      required: ["newStatus", "reason"]
+      properties:
+        newStatus:
+          type: "string"
+          enum: ["VERIFIED", "COLLATERALIZED", "REJECTED", "RELEASED"]
+        reason:
+          type: "string"
+
+    GatewaySuccessResponse:
+      type: "object"
+      required: ["status", "correlationId"]
+      properties:
+        status:
+          type: "string"
+          enum: ["SUCCESS"]
+        correlationId:
+          type: "string"
+        txReference:
+          type: "string"
+          nullable: true
+        data:
+          type: "object"
+          additionalProperties: true
+
+    GatewayFallbackResponse:
+      type: "object"
+      required: ["status", "errorCode", "correlationId", "fallback"]
+      properties:
+        status:
+          type: "string"
+          enum: ["FALLBACK"]
+        errorCode:
+          type: "string"
+          enum: ["BESU_UNAVAILABLE", "BESU_TIMEOUT", "CONTRACT_ABI_MISMATCH"]
+        correlationId:
+          type: "string"
+        fallback:
+          type: "object"
+          properties:
+            reason:
+              type: "string"
+            deterministicKey:
+              type: "string"
+
+    AuditTraceResponse:
+      type: "object"
+      required: ["correlationId", "events"]
+      properties:
+        correlationId:
+          type: "string"
+        events:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              eventTime:
+                type: "string"
+                format: "date-time"
+              operation:
+                type: "string"
+              status:
+                type: "string"
+              txReference:
+                type: "string"
+                nullable: true
+              fallbackReason:
+                type: "string"
+                nullable: true
