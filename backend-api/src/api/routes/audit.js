@@ -1,41 +1,20 @@
 const express = require("express");
-const fs = require("fs");
-const path = require("path");
-
-const { buildSuccessResponse } = require("../../common/responseSchema");
-const { AUDIT_FILE } = require("../../services/audit/auditStore");
+const { AppError } = require("../../common/appError");
+const { getTraceByCorrelationId } = require("../../services/audit/getTraceByCorrelationId");
 
 const router = express.Router();
 
+const CORRELATION_PATTERN = /^GARUDA-[0-9a-fA-F-]{36}$/;
+
 router.get("/traces/:correlationId", (req, res, next) => {
   try {
-    if (!fs.existsSync(AUDIT_FILE)) {
-      return res.status(200).json(
-        buildSuccessResponse({
-          correlationId: req.correlationId,
-          message: "Audit trace kosong",
-          data: {
-            trace: [],
-          },
-        })
-      );
+    const pathCorrelationId = req.params.correlationId;
+    if (!CORRELATION_PATTERN.test(pathCorrelationId)) {
+      throw new AppError(400, "INVALID_CORRELATION_ID", "Format correlationId tidak valid");
     }
 
-    const lines = fs.readFileSync(path.resolve(AUDIT_FILE), "utf8").split("\n").filter(Boolean);
-    const trace = lines
-      .map((line) => JSON.parse(line))
-      .filter((event) => event.correlationId === req.params.correlationId)
-      .sort((a, b) => new Date(a.eventTime) - new Date(b.eventTime));
-
-    return res.status(200).json(
-      buildSuccessResponse({
-        correlationId: req.correlationId,
-        message: "Audit trace berhasil diambil",
-        data: {
-          trace,
-        },
-      })
-    );
+    const trace = getTraceByCorrelationId(pathCorrelationId);
+    return res.status(200).json(trace);
   } catch (error) {
     return next(error);
   }
