@@ -99,3 +99,29 @@ Alternatives considered:
 - Interface contracts: endpoint gateway + contract operasi Besu didokumentasikan.
 - Audit evidence: wajib untuk success dan fallback.
 - Compatibility dengan mock policy existing: dipertahankan.
+## R-007: Architecture Boundary Enforcement (Verified 2026-03-20)
+
+Decision: Implement strict AI-DLT boundary through gateway ownership and test-driven verification.
+
+Evidence of enforcement (T012 + T040):
+- No web3, ethers, or json-rpc imports allowed in ai-engine codebase
+- All DLT calls routed exclusively through backend-api/src/services/besuGatewayService.js
+- AI modules (language models, inference, data processing) are completely decoupled from blockchain layer
+- Compliance validated by automated test: test_no_direct_dlt_calls.py (7/7 tests pass)
+
+Rationale:
+- Memenuhi HA-002 (AI tidak tahu tentang blockchain)
+- Memenuhi HA-003 (Gateway adalah satu-satunya integrator)
+- Memudahkan testing, mocking, dan fallback handling
+- Scalable untuk menambah AI models di masa depan tanpa perubahan DLT integration
+
+Verification results:
+- Static analysis: No blockchain imports in ai-engine/**/*
+- Unit tests: 7/7 boundary guard tests pass
+- Integration: All backend tests pass assuming gateway is sole DLT writer
+- Fallback behavior: Deterministic error responses from gateway; AI receives mocked errors only
+
+Future-proofing:
+- Menambah AI capability: no change to DLT layer
+- Menambah DLT adapters: no change to AI layer
+- Event-driven model: Future event stream dari gateway ke AI bisa diimplementasikan tanpa breaking boundary
