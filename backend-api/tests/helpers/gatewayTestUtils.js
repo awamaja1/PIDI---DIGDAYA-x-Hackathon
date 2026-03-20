@@ -4,6 +4,7 @@ const http = require("http");
 
 const { app } = require("../../src/app");
 const { AUDIT_FILE } = require("../../src/services/audit/auditStore");
+const { clearTokenStates } = require("../../src/services/besu/tokenStateStore");
 
 function applyBesuTestEnv(simulationMode = "success") {
   process.env.BESU_RPC_URL = "http://127.0.0.1:8545";
@@ -27,6 +28,10 @@ function clearAuditArtifacts() {
   if (fs.existsSync(logDir) && fs.readdirSync(logDir).length === 0) {
     fs.rmdirSync(logDir);
   }
+}
+
+function clearInMemoryStates() {
+  clearTokenStates();
 }
 
 async function withServer(runTest) {
@@ -53,6 +58,7 @@ async function withServer(runTest) {
 module.exports = {
   applyBesuTestEnv,
   clearAuditArtifacts,
+  clearInMemoryStates,
   withServer,
   AUDIT_FILE,
 };

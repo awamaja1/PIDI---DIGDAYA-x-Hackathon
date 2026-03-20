@@ -1,4 +1,5 @@
 const crypto = require("crypto");
+const { saveTokenState } = require("./tokenStateStore");
 
 function createDeterministicHash(input) {
   return crypto.createHash("sha256").update(input).digest("hex");
@@ -43,6 +44,16 @@ async function mintToken({ config, correlationId, payload }) {
   };
 }
 
+async function mintTokenWithState(args) {
+  const minted = await mintToken(args);
+  saveTokenState({
+    tokenId: minted.tokenId,
+    status: "TOKENIZED",
+    txReference: minted.txReference,
+  });
+  return minted;
+}
+
 module.exports = {
-  mintToken,
+  mintToken: mintTokenWithState,
 };
