@@ -84,48 +84,49 @@ Simpan artefak berikut untuk review `/speckit.tasks` dan PR:
 - Cuplikan request-response fallback deterministik
 - Audit trace berdasarkan satu `correlationId`
 - Catatan boundary check: tidak ada AI->DLT direct call
+
 ## 8. Evidensi Eksekusi: Test Run Results (2026-03-20)
 
 ### SC-001: Integration Test Suite Results
 
-\\\
+```text
 npm run test:integration
-? integration test harness is configured (1.1366ms)
-? tokenize success flow returns SUCCESS, txReference, and correlationId echo (97.3355ms)
-? tokenize writes audit trace with matching correlationId and operation (93.0003ms)
-? tokenize fallback is deterministic for repeated identical requests (158.4315ms)
-? update then verify returns consistent status for same token (150.8319ms)
-? update/verify fallback responses are deterministic for same failure class (166.6397ms)
-? audit trace includes tokenize, updateStatus, verifyStatus under one correlationId (147.2728ms)
-? audit trace records fallback reason for failed operation (101.2316ms)
+PASS integration test harness is configured (1.1366ms)
+PASS tokenize success flow returns SUCCESS, txReference, and correlationId echo (97.3355ms)
+PASS tokenize writes audit trace with matching correlationId and operation (93.0003ms)
+PASS tokenize fallback is deterministic for repeated identical requests (158.4315ms)
+PASS update then verify returns consistent status for same token (150.8319ms)
+PASS update/verify fallback responses are deterministic for same failure class (166.6397ms)
+PASS audit trace includes tokenize, updateStatus, verifyStatus under one correlationId (147.2728ms)
+PASS audit trace records fallback reason for failed operation (101.2316ms)
 
 Result: 8/8 PASSED | Duration: 3322.7967ms
-\\\
+```
 
 Status: **PASS** - Proves US1 (tokenize), US2 (update/verify), US3 (audit) fully operational
 
 ### SC-002: Contract Test Suite Results
 
-\\\
+```text
 npm run test:contract
-? POST /api/v1/tokens/tokenize shape validation
-? PATCH /api/v1/tokens/{tokenId}/status shape validation
-? GET /api/v1/tokens/{tokenId}/verify shape validation
-? GET /api/v1/audit/traces/{correlationId} shape validation
-? Compliance tags presence validation (CR-001, CR-004, CR-005)
+PASS POST /api/v1/tokens/tokenize shape validation
+PASS PATCH /api/v1/tokens/{tokenId}/status shape validation
+PASS GET /api/v1/tokens/{tokenId}/verify shape validation
+PASS GET /api/v1/audit/traces/{correlationId} shape validation
+PASS Compliance tags presence validation (CR-001, CR-004, CR-005)
 
 Result: 9/9 PASSED | Duration: 1906.82ms
-\\\
+```
 
 Status: **PASS** - Proves all response shapes match specification
 
 ### SC-003: AI Boundary Guard Test Results
 
-\\\
+```text
 python -m unittest discover tests
 Ran 7 tests in 0.060s
 OK (no direct web3/ethers imports in ai-engine)
-\\\
+```
 
 Status: **PASS** - Proves HA-002/HA-003: zero AI->DLT direct calls
 
