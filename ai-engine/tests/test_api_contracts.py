@@ -3,7 +3,7 @@ from copy import deepcopy
 
 from fastapi.testclient import TestClient
 
-from app.main import app
+from ai_engine.app.main import app
 
 
 class TestAIEngineAPIContracts(unittest.TestCase):
