@@ -2,6 +2,7 @@
 
 **Branch**: `002-smart-contract-integration` | **Tanggal**: 2026-03-20 | **Spec**: [spec.md](./spec.md)
 **Input**: Feature specification dari `/specs/002-smart-contract-integration/spec.md`
+**Changelog**: Lihat [CHANGELOG.md](../../CHANGELOG.md) untuk ringkasan rilis terbaru.
 
 ## Ringkasan
 

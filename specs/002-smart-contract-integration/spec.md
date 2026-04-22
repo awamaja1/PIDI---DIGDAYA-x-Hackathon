@@ -4,6 +4,7 @@
 **Created**: 2026-03-20  
 **Status**: Draft  
 **Input**: User description: "Integrasi alur smart contract Besu untuk tokenisasi GarudaLink dengan fallback deterministik dan jejak audit correlation ID"
+**Changelog**: Lihat [CHANGELOG.md](../../CHANGELOG.md) untuk ringkasan rilis terbaru.
 
 ## User Scenarios & Testing *(mandatory)*
 

@@ -2,6 +2,7 @@
 
 **Branch**: `002-smart-contract-integration` | **Tanggal**: 2026-03-20
 **Tujuan**: Menjalankan dan memverifikasi alur tokenisasi/update/verifikasi status melalui backend gateway dengan fallback deterministik.
+**Changelog**: Lihat [CHANGELOG.md](../../CHANGELOG.md) untuk ringkasan rilis terbaru.
 
 ## Prasyarat
 

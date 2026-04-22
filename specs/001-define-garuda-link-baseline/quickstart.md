@@ -2,6 +2,7 @@
 
 **Branch**: `001-define-garuda-link-baseline` | **Tanggal**: 2026-03-17  
 **Target Demo**: Alur P1 end-to-end — Petani (prediksi harga + rute + tokenisasi)
+**Changelog**: Lihat [CHANGELOG.md](../../CHANGELOG.md) untuk ringkasan rilis terbaru.
 
 ---
 
