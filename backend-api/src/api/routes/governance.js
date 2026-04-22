@@ -2,7 +2,7 @@ const express = require("express");
 
 const { AppError } = require("../../common/appError");
 const { buildSuccessResponse } = require("../../common/responseSchema");
-const { getEvidenceBundle } = require("../../services/governance");
+const { getEvidenceBundle, getGovernanceSummary } = require("../../services/governance");
 
 const router = express.Router();
 
@@ -25,6 +25,28 @@ router.get("/evidence/:correlationId", (req, res, next) => {
         correlationId: req.correlationId,
         data: evidenceBundle,
         message: "Evidence bundle retrieved",
+      })
+    );
+  } catch (error) {
+    return next(error);
+  }
+});
+
+router.get("/summary", (req, res, next) => {
+  try {
+    const period = (req.query.period || "daily").toLowerCase();
+    if (period !== "daily" && period !== "release") {
+      throw new AppError(400, "INVALID_PERIOD", "Parameter period harus daily atau release");
+    }
+
+    const key = typeof req.query.key === "string" && req.query.key.trim() !== "" ? req.query.key : null;
+    const summary = getGovernanceSummary({ period, key });
+
+    return res.status(200).json(
+      buildSuccessResponse({
+        correlationId: req.correlationId,
+        data: summary,
+        message: "Governance summary retrieved",
       })
     );
   } catch (error) {
