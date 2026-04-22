@@ -1,10 +1,14 @@
 import unittest
 from copy import deepcopy
+from pathlib import Path
+import sys
 
 from fastapi.testclient import TestClient
 
-from ai_engine.app.main import app
+# Ensure tests can import the app package from the ai-engine directory.
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+from app.main import app
 
 class TestAIEngineAPIContracts(unittest.TestCase):
     @classmethod
