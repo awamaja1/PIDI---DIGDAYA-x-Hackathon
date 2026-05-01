@@ -16,5 +16,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Added
+- Governance evidence endpoint for correlation-based evidence bundles.
+- Governance summary endpoint for daily and release control views.
+- Release readiness endpoint with GO, CONDITIONAL_GO, and NO_GO decisions.
+- Verification scripts and quickstart guidance for governance evidence, summary, and readiness checks.
+
 ### Changed
-- Future updates will be tracked here.
+- Expanded compliance documentation for Feature 003 with plan, research, data model, and tasks.
