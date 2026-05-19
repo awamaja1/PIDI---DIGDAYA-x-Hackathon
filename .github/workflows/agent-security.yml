@@ -1,0 +1,43 @@
+name: Agent Security Checks
+
+on:
+  pull_request:
+    paths:
+      - '**/*.js'
+      - '**/*.py'
+      - '.github/**'
+  push:
+    branches: [ main ]
+
+jobs:
+  scan-and-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Run codebase scan
+        run: |
+          python .github/skills/acquire-codebase-knowledge/scripts/scan.py --output docs/codebase/.codebase-scan-ci.txt
+
+      - name: Fail on dangerous patterns
+        shell: bash
+        run: |
+          if git grep -nE "eval\(|exec\(|subprocess\.run\(|os\.system\(|shell=True|subprocess\.Popen"; then
+            echo "Dangerous patterns found; fail the job."; exit 1
+          else
+            echo "No dangerous patterns found.";
+          fi
+
+      - name: Check unpinned dependencies in backend-api/package.json
+        shell: bash
+        run: |
+          if [ -f backend-api/package.json ]; then
+            node -e "const fs=require('fs');const j=JSON.parse(fs.readFileSync('backend-api/package.json')); const issues=[]; ['dependencies','devDependencies'].forEach(s=>{const o=j[s]||{}; Object.entries(o).forEach(([k,v])=>{ if(typeof v==='string' && (v.startsWith('^')||v.startsWith('~')||v==='*'||v==='latest')) issues.push(s+':'+k+'@'+v) }) }); if(issues.length){ console.error('UNPINNED_DEPENDENCIES:\n'+issues.join('\n')); process.exit(2);} else { console.log('No unpinned deps in backend-api/package.json'); }"
+          else
+            echo "No backend-api/package.json found; skipping";
+          fi
