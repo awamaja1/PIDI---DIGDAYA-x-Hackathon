@@ -94,12 +94,25 @@ Lihat [specs/002-smart-contract-integration/quickstart.md](specs/002-smart-contr
 **Specs**: [specs/002-smart-contract-integration/](specs/002-smart-contract-integration/)  
 **Release**: [v0.1.0](https://github.com/awamaja1/PIDI---DIGDAYA-x-Hackathon/releases/tag/v0.1.0)
 
-### Feature 003: Enhanced Compliance & Governance (Planned)
-*Belum dimulai*
+### Feature 003: Enhanced Compliance & Governance (Completed ✅)
+- Endpoint deterministic evidence bundle dengan correlation tracking
+- Daily/release governance summary dengan 4 control domains (AUDIT_TRACE, FALLBACK_DETERMINISM, DATA_PROTECTION, SECURITY_READINESS)
+- Release readiness checklist dengan GO/CONDITIONAL_GO/NO_GO decision logic
+- Override traceability untuk compliance audit
+- 17 integration tests + 12 contract tests validasi lengkap
+
+**Branch**: `003-enhanced-compliance-governance`  
+**Specs**: [specs/003-enhanced-compliance-governance/](specs/003-enhanced-compliance-governance/)  
+**Endpoints**: 
+- GET `/api/v1/governance/evidence/:correlationId` - Evidence bundle
+- GET `/api/v1/governance/summary?period=daily|release&key=...` - Summary aggregation
+- GET `/api/v1/governance/release-readiness?releaseCandidate=...` - Readiness checklist
 
 ## 📦 Rilis & Changelog
 
-**Latest Release**: [v0.1.0 - Feature 002 Smart-Contract Integration](https://github.com/awamaja1/PIDI---DIGDAYA-x-Hackathon/releases/tag/v0.1.0)
+**Latest Release**: [v0.2.0 - Feature 003 Enhanced Compliance & Governance](https://github.com/awamaja1/PIDI---DIGDAYA-x-Hackathon/releases/tag/v0.2.0)
+
+Previous: [v0.1.0 - Feature 002 Smart-Contract Integration](https://github.com/awamaja1/PIDI---DIGDAYA-x-Hackathon/releases/tag/v0.1.0)
 
 Lihat [CHANGELOG.md](CHANGELOG.md) untuk ringkasan lengkap rilis.
 
@@ -147,6 +160,15 @@ Lihat [CHANGELOG.md](CHANGELOG.md) untuk ringkasan lengkap rilis.
 │       ├── data-model.md              # Token lifecycle
 │       └── checklists/
 │           └── requirements.md        # Compliance checklist
+│   └── 003-enhanced-compliance-governance/
+│       ├── spec.md                    # Governance requirements
+│       ├── plan.md                    # Implementation planning
+│       ├── research.md                # Governance architecture
+│       ├── quickstart.md              # Verification guide
+│       ├── data-model.md              # Evidence & compliance models
+│       ├── tasks.md                   # Implementation tasks
+│       └── checklists/
+│           └── requirements.md        # Governance compliance checklist
 ├── docs/
 │   └── proposal/                      # Hackathon proposal docs
 └── .gitignore                          # Git ignore rules
