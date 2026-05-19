@@ -1,0 +1,97 @@
+version: '3.8'
+
+services:
+  backend-api-staging:
+    image: node:20-alpine
+    container_name: garuda-link-backend-api-staging
+    working_dir: /app
+    environment:
+      - NODE_ENV=staging
+      - LOG_LEVEL=info
+      - PORT=3000
+      - BESU_RPC_URL=${BESU_RPC_URL:-http://besu-staging:8545}
+      - BESU_WS_URL=${BESU_WS_URL:-ws://besu-staging:8546}
+      - CORS_ORIGIN=${CORS_ORIGIN:-https://staging.garuda-link.local}
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./backend-api:/app
+      - /app/node_modules
+    command: >
+      sh -c "npm ci && npm run dev"
+    depends_on:
+      - besu-staging
+    networks:
+      - garuda-staging
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/v1/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  besu-staging:
+    image: hyperledger/besu:latest
+    container_name: garuda-link-besu-staging
+    environment:
+      - BESU_P2P_HOST=0.0.0.0
+      - BESU_P2P_PORT=30303
+      - BESU_RPC_HTTP_ENABLED=true
+      - BESU_RPC_HTTP_HOST=0.0.0.0
+      - BESU_RPC_HTTP_PORT=8545
+      - BESU_RPC_WS_ENABLED=true
+      - BESU_RPC_WS_HOST=0.0.0.0
+      - BESU_RPC_WS_PORT=8546
+      - BESU_LOGGING=INFO
+      - BESU_CONSENSUS_MECHANISM=qbft
+    ports:
+      - "8545:8545"
+      - "8546:8546"
+      - "30303:30303"
+    volumes:
+      - besu-staging-data:/data
+      - ./besu/config/staging:/config
+    command: >
+      --data-path=/data
+      --config-file=/config/config.toml
+    networks:
+      - garuda-staging
+    restart: unless-stopped
+
+  ai-engine-staging:
+    image: python:3.11-slim
+    container_name: garuda-link-ai-engine-staging
+    working_dir: /app
+    environment:
+      - ENVIRONMENT=staging
+      - LOG_LEVEL=info
+      - BACKEND_API_URL=http://backend-api-staging:3000
+      - UVICORN_HOST=0.0.0.0
+      - UVICORN_PORT=8000
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./ai-engine:/app
+      - /app/.venv
+    command: >
+      sh -c "pip install -r requirements.txt && uvicorn app.main:app --host 0.0.0.0 --port 8000"
+    depends_on:
+      - backend-api-staging
+    networks:
+      - garuda-staging
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+volumes:
+  besu-staging-data:
+    driver: local
+
+networks:
+  garuda-staging:
+    driver: bridge
