@@ -1,0 +1,313 @@
+
+=== DIRECTORY TREE (max depth 3, source files only) ===
+.env.staging
+.env.staging.example
+.github
+.github\agents
+.github\agents\copilot-instructions.md
+.github\agents\speckit.analyze.agent.md
+.github\agents\speckit.checklist.agent.md
+.github\agents\speckit.clarify.agent.md
+.github\agents\speckit.constitution.agent.md
+.github\agents\speckit.implement.agent.md
+.github\agents\speckit.plan.agent.md
+.github\agents\speckit.specify.agent.md
+.github\agents\speckit.tasks.agent.md
+.github\agents\speckit.taskstoissues.agent.md
+.github\prompts
+.github\prompts\speckit.analyze.prompt.md
+.github\prompts\speckit.checklist.prompt.md
+.github\prompts\speckit.clarify.prompt.md
+.github\prompts\speckit.constitution.prompt.md
+.github\prompts\speckit.implement.prompt.md
+.github\prompts\speckit.plan.prompt.md
+.github\prompts\speckit.specify.prompt.md
+.github\prompts\speckit.tasks.prompt.md
+.github\prompts\speckit.taskstoissues.prompt.md
+.github\prompts\ui-ux-pro-max
+.github\prompts\ui-ux-pro-max\data
+.github\prompts\ui-ux-pro-max\PROMPT.md
+.github\prompts\ui-ux-pro-max\scripts
+.github\skills
+.github\skills\acquire-codebase-knowledge
+.github\skills\acquire-codebase-knowledge\assets
+.github\skills\acquire-codebase-knowledge\references
+.github\skills\acquire-codebase-knowledge\scripts
+.github\skills\acquire-codebase-knowledge\SKILL.md
+.github\skills\agent-governance
+.github\skills\agent-governance\SKILL.md
+.github\skills\agent-owasp-compliance
+.github\skills\agent-owasp-compliance\SKILL.md
+.github\skills\agent-supply-chain
+.github\skills\agent-supply-chain\SKILL.md
+.github\skills\agentic-eval
+.github\skills\agentic-eval\SKILL.md
+.github\skills\ai-prompt-engineering-safety-review
+.github\skills\ai-prompt-engineering-safety-review\SKILL.md
+.github\skills\architecture-blueprint-generator
+.github\skills\architecture-blueprint-generator\SKILL.md
+.github\skills\audit-integrity
+.github\skills\audit-integrity\references
+.github\skills\audit-integrity\SKILL.md
+.github\workflows
+.github\workflows\ai-engine-ci.yml
+.gitignore
+.specify
+.specify\init-options.json
+.specify\memory
+.specify\memory\constitution.md
+.specify\memory\spec.md
+.specify\scripts
+.specify\scripts\powershell
+.specify\scripts\powershell\check-prerequisites.ps1
+.specify\scripts\powershell\common.ps1
+.specify\scripts\powershell\create-new-feature.ps1
+.specify\scripts\powershell\setup-plan.ps1
+.specify\scripts\powershell\update-agent-context.ps1
+.specify\templates
+.specify\templates\agent-file-template.md
+.specify\templates\checklist-template.md
+.specify\templates\constitution-template.md
+.specify\templates\plan-template.md
+.specify\templates\spec-template.md
+.specify\templates\tasks-template.md
+.vscode
+.vscode\settings.json
+ai-engine
+ai-engine\app
+ai-engine\app\__init__.py
+ai-engine\app\main.py
+ai-engine\app\routers
+ai-engine\app\routers\__init__.py
+ai-engine\app\routers\forecast.py
+ai-engine\app\routers\health.py
+ai-engine\app\routers\optimize.py
+ai-engine\app\schemas
+ai-engine\app\schemas\__init__.py
+ai-engine\app\schemas\contracts.py
+ai-engine\app\services
+ai-engine\app\services\__init__.py
+ai-engine\app\services\forecast_stub.py
+ai-engine\app\services\governance_aware_pricing.py
+ai-engine\app\services\route_stub.py
+ai-engine\requirements.txt
+ai-engine\tests
+ai-engine\tests\test_api_contracts.py
+ai-engine\tests\test_no_direct_dlt_calls.py
+backend-api
+backend-api\.env.example
+backend-api\contracts
+backend-api\contracts\abi
+backend-api\contracts\abi\GarudaLinkRegistry.json
+backend-api\contracts\abi\GarudaLinkTokenization.json
+backend-api\logs
+backend-api\logs\audit-events.ndjson
+backend-api\package-lock.json
+backend-api\package.json
+backend-api\pnpm-lock.yaml
+backend-api\scripts
+backend-api\scripts\verify-correlation-audit.ps1
+backend-api\scripts\verify-fallback-determinism.ps1
+backend-api\scripts\verify-governance-evidence.ps1
+backend-api\scripts\verify-governance-summary.ps1
+backend-api\scripts\verify-mock-local.ps1
+backend-api\server.js
+backend-api\src
+backend-api\src\api
+backend-api\src\api\routes
+backend-api\src\api\validators
+backend-api\src\app.js
+backend-api\src\common
+backend-api\src\common\appError.js
+backend-api\src\common\responseSchema.js
+backend-api\src\config
+backend-api\src\config\besu.js
+backend-api\src\middleware
+backend-api\src\middleware\aes256Dummy.js
+backend-api\src\middleware\correlationId.js
+backend-api\src\middleware\errorHandler.js
+backend-api\src\mock
+backend-api\src\mock\data
+backend-api\src\mock\mockServer.js
+backend-api\src\services
+backend-api\src\services\audit
+backend-api\src\services\besu
+backend-api\src\services\besuGatewayService.js
+backend-api\src\services\fallback
+backend-api\src\services\governance
+backend-api\tests
+backend-api\tests\contract
+backend-api\tests\contract\.gitkeep
+backend-api\tests\contract\audit-trace.contract.test.js
+backend-api\tests\contract\governance-evidence.contract.test.js
+backend-api\tests\contract\governance-readiness.contract.test.js
+backend-api\tests\contract\governance-summary.contract.test.js
+backend-api\tests\contract\index.test.js
+backend-api\tests\contract\tokenize.contract.test.js
+backend-api\tests\contract\update-status.contract.test.js
+backend-api\tests\contract\verify-status.contract.test.js
+backend-api\tests\governance-benchmarks.js
+backend-api\tests\helpers
+backend-api\tests\helpers\gatewayTestUtils.js
+backend-api\tests\integration
+backend-api\tests\integration\.gitkeep
+backend-api\tests\integration\audit-trace.fallback.test.js
+backend-api\tests\integration\audit-trace.success.test.js
+backend-api\tests\integration\governance-evidence.determinism.test.js
+backend-api\tests\integration\governance-evidence.fallback.test.js
+backend-api\tests\integration\governance-evidence.success.test.js
+backend-api\tests\integration\governance-readiness.decision.test.js
+backend-api\tests\integration\governance-readiness.derivation.test.js
+backend-api\tests\integration\governance-readiness.override.test.js
+backend-api\tests\integration\governance-summary.daily.test.js
+backend-api\tests\integration\governance-summary.drilldown.test.js
+backend-api\tests\integration\governance-summary.release.test.js
+backend-api\tests\integration\index.test.js
+backend-api\tests\integration\tokenize.audit-trace.test.js
+backend-api\tests\integration\tokenize.fallback.deterministic.test.js
+backend-api\tests\integration\tokenize.success.test.js
+backend-api\tests\integration\update-verify.fallback.deterministic.test.js
+backend-api\tests\integration\update-verify.success.test.js
+CHANGELOG.md
+DEPLOYMENT.md
+docker-compose.staging.yml
+docs
+docs\codebase
+docs\codebase\.codebase-scan.txt
+docs\lainnya
+docs\lainnya\[Digdaya BI 2026] Onboarding Session.pdf
+docs\lainnya\jadwal fase essential training.jpeg
+docs\lainnya\Screenshot 2026-05-04 185603.png
+docs\lainnya\Screenshot 2026-05-04 190117.png
+docs\lainnya\Screenshot 2026-05-04 190302.png
+docs\lainnya\Screenshot 2026-05-04 190450.png
+docs\lainnya\Screenshot 2026-05-04 190729.png
+docs\lainnya\Screenshot 2026-05-04 190830.png
+docs\lainnya\Screenshot 2026-05-04 191943.png
+docs\lainnya\Screenshot 2026-05-06 111623.png
+docs\lainnya\Screenshot 2026-05-07 185834.png
+docs\lainnya\Screenshot 2026-05-07 194958.png
+docs\lainnya\Screenshot 2026-05-07 200107.png
+docs\lainnya\Screenshot 2026-05-11 184810.png
+docs\lainnya\Screenshot 2026-05-11 185356.png
+docs\lainnya\Screenshot 2026-05-11 185620.png
+docs\lainnya\Screenshot 2026-05-11 190509.png
+docs\proposal
+docs\proposal\BOOKLET PIDI - DIGDAYA X HACKATHON 2026.pdf
+docs\proposal\diagram
+docs\proposal\diagram\Architecture Diagram.png
+docs\proposal\diagram\Sequence Diagram.png
+docs\proposal\diagram\Use Case Diagram.png
+docs\proposal\Lampiran Proposal.docx
+docs\proposal\Lampiran Proposal.pdf
+
+=== STACK DETECTION (manifest files) ===
+No recognized manifest files found in project root.
+
+=== ENTRY POINTS ===
+No common entry points found. Check 'main' or 'scripts.start' in manifest files above.
+
+=== LINTING AND FORMATTING CONFIG ===
+No linting or formatting config files found in project root.
+
+=== ENVIRONMENT VARIABLE TEMPLATES ===
+No .env.example or .env.template found. Identify required environment variables by searching the code and config for environment variable reads.
+
+=== TODO / FIXME / HACK (production code only, test dirs excluded) ===
+.github\skills\acquire-codebase-knowledge\scripts\scan.py:28: TODO_LIMIT = 60
+.github\skills\acquire-codebase-knowledge\scripts\scan.py:291: """Search for TODO/FIXME/HACK comments."""
+.github\skills\acquire-codebase-knowledge\scripts\scan.py:291: """Search for TODO/FIXME/HACK comments."""
+.github\skills\acquire-codebase-knowledge\scripts\scan.py:291: """Search for TODO/FIXME/HACK comments."""
+.github\skills\acquire-codebase-knowledge\scripts\scan.py:293: patterns = ["TODO", "FIXME", "HACK"]
+.github\skills\acquire-codebase-knowledge\scripts\scan.py:293: patterns = ["TODO", "FIXME", "HACK"]
+.github\skills\acquire-codebase-knowledge\scripts\scan.py:293: patterns = ["TODO", "FIXME", "HACK"]
+.github\skills\acquire-codebase-knowledge\scripts\scan.py:320: return todos[:TODO_LIMIT]
+.github\skills\acquire-codebase-knowledge\scripts\scan.py:617: # TODOs
+.github\skills\acquire-codebase-knowledge\scripts\scan.py:620: print_section("TODO / FIXME / HACK (production code only, test dirs excluded)", todos, output_file)
+.github\skills\acquire-codebase-knowledge\scripts\scan.py:620: print_section("TODO / FIXME / HACK (production code only, test dirs excluded)", todos, output_file)
+.github\skills\acquire-codebase-knowledge\scripts\scan.py:620: print_section("TODO / FIXME / HACK (production code only, test dirs excluded)", todos, output_file)
+.github\skills\acquire-codebase-knowledge\scripts\scan.py:622: print_section("TODO / FIXME / HACK (production code only, test dirs excluded)", ["None found."], output_file)
+.github\skills\acquire-codebase-knowledge\scripts\scan.py:622: print_section("TODO / FIXME / HACK (production code only, test dirs excluded)", ["None found."], output_file)
+.github\skills\acquire-codebase-knowledge\scripts\scan.py:622: print_section("TODO / FIXME / HACK (production code only, test dirs excluded)", ["None found."], output_file)
+
+=== GIT RECENT COMMITS (last 20) ===
+5f44b61 refactor: simplify governance summary verification script
+baffec4 docs: add staging deployment verification and environment configuration
+141bb4c docs: add Feature 003 completion report
+9ede976 docs(ai-governance): add integration guide and example pricing service
+2c37a4d perf: add governance endpoints performance benchmarks with SLA validation
+b263a87 chore(deploy): add staging docker-compose and deployment documentation
+2de7523 docs: update README for Feature 003 governance endpoints
+5112780 chore: add docs/lainnya to gitignore
+b2759c5 docs: summarize feature 003 governance work in changelog
+e59931f docs(governance): add verification scripts and quickstart checklist
+9cae95f feat(governance): add release readiness endpoint and decision rules
+b91942a feat(governance): add summary endpoint with daily and release views
+99c2f62 feat(governance): add evidence endpoint and US1 test coverage
+f3f5b7b docs(spec-003): add implementation tasks breakdown
+5ad332f docs(spec-003): add plan, research, and data model
+00b05d7 docs(spec): add feature 003 enhanced compliance governance draft
+a72d515 docs: add comprehensive README for project onboarding
+29fa727 docs: add v0.1.0 changelog and link it in core specs
+2586caf fix ai engine CI
+719df99 change module import sentence
+
+=== HIGH-CHURN FILES (last 90 days, top 20) ===
+   5 .gitignore
+   4 backend-api/package.json
+   4 specs/002-smart-contract-integration/quickstart.md
+   3 backend-api/src/api/routes/governance.js
+   3 backend-api/src/services/governance/index.js
+   3 backend-api/src/api/routes/index.js
+   3 .github/workflows/ai-engine-ci.yml
+   3 ai-engine/tests/test_api_contracts.py
+   3 backend-api/node_modules/.package-lock.json
+   3 backend-api/src/api/routes/tokens.js
+   3 backend-api/src/services/besuGatewayService.js
+   2 backend-api/scripts/verify-governance-summary.ps1
+   2 README.md
+   2 CHANGELOG.md
+   2 specs/001-define-garuda-link-baseline/quickstart.md
+   2 specs/002-smart-contract-integration/plan.md
+   2 specs/002-smart-contract-integration/spec.md
+   2 backend-api/logs/audit-events.ndjson
+   2 backend-api/node_modules/.bin/mime
+   2 backend-api/node_modules/.bin/mime.cmd
+
+=== MONOREPO SIGNALS ===
+No monorepo signals detected.
+
+=== CODE METRICS ===
+Total files scanned: 261
+Total lines of code: 9699
+
+Files by language:
+  Other: 182
+  JavaScript: 61
+  Python: 18
+
+Top 10 largest files:
+docs\proposal\Literatur\Roadmap Pengembangan Perbankan Indonesia 2020-2025 (Long Version).pdf: 40040.7KB
+docs\proposal\Literatur\Cetak Biru Transformasi Digital Perbankan (Short Version).pdf: 30354.0KB
+docs\proposal\BOOKLET PIDI - DIGDAYA X HACKATHON 2026.pdf: 22182.9KB
+docs\proposal\Literatur\Peta Jalan Pengembangan dan Penguatan Lembaga Pengelola Informasi Perkreditan 2024-2028.pdf: 21730.5KB
+docs\proposal\Literatur\Roadmap Pengembangan dan Penguatan Industri BPR dan BPRS RP2B 2024-2027.pdf: 21658.4KB
+docs\proposal\Literatur\Roadmap Penguatan Bank Pembangunan Daerah 2024-2027.pdf: 18699.3KB
+docs\proposal\Literatur\Climate Risk and Banking Sector Resilience Assessment.pdf: 17438.6KB
+docs\proposal\Proyek Garuda - Rupiah Digital\White_Paper_CBDC-2022.pdf: 14166.2KB
+docs\proposal\Literatur\Buku Panduan bagi Bank Perekonomian Rakyat.pdf: 13455.8KB
+docs\proposal\Proyek Garuda - Rupiah Digital\Laporan-Konsultasi-Publik-Proyek-Garuda.pdf: 11742.5KB
+
+=== CI/CD PIPELINES ===
+CI/CD: GitHub Actions
+
+=== CONTAINERS & ORCHESTRATION ===
+No containerization configs detected.
+
+=== SECURITY & COMPLIANCE ===
+No security configs detected.
+
+=== PERFORMANCE & TESTING ===
+No performance testing configs detected.
+
+=== SCAN COMPLETE ===
