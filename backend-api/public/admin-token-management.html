@@ -6,8 +6,147 @@
   <title>Garuda Admin - Token Management</title>
   <link rel="stylesheet" href="/css/design-system-tokens.css">
   <style>
-    .token-list td, .token-list th { font-size: var(--font-size-sm); }
-    .token-actions { display:flex; gap: var(--space-sm); }
+    /* Dashboard-specific styles */
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background-color: var(--color-surface);
+      border-bottom: 2px solid var(--color-accent);
+      padding: var(--space-lg) var(--space-2xl);
+      box-shadow: var(--shadow-md);
+    }
+
+    header h1 {
+      margin: 0;
+      color: var(--color-accent);
+      font-size: var(--font-size-xl);
+    }
+
+    nav.breadcrumb {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-muted);
+      margin-top: var(--space-md);
+    }
+
+    nav.breadcrumb a {
+      color: var(--color-accent);
+      margin: 0 var(--space-xs);
+    }
+
+    main {
+      flex: 1;
+      padding: var(--space-2xl);
+    }
+
+    .controls-row {
+      display: flex;
+      gap: var(--space-lg);
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-lg);
+      padding: var(--space-md);
+      background-color: var(--color-surface);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border);
+    }
+
+    .flex.gap-md {
+      display: flex;
+      gap: var(--space-md);
+    }
+
+    section {
+      margin-bottom: var(--space-2xl);
+      background-color: var(--color-surface);
+      padding: var(--space-lg);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border);
+    }
+
+    section h2 {
+      color: var(--color-accent);
+      font-size: var(--font-size-lg);
+      margin-top: 0;
+      margin-bottom: var(--space-md);
+      border-bottom: 1px solid var(--color-border);
+      padding-bottom: var(--space-md);
+    }
+
+    form {
+      display: grid;
+      gap: var(--space-md);
+      margin-bottom: var(--space-md);
+    }
+
+    form label {
+      display: flex;
+      flex-direction: column;
+      font-size: var(--font-size-sm);
+      color: var(--color-text);
+    }
+
+    form input,
+    form select {
+      padding: var(--space-sm);
+      margin-top: var(--space-xs);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      font-size: var(--font-size-sm);
+    }
+
+    form input:focus,
+    form select:focus {
+      outline: none;
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 3px rgba(var(--rgb-accent), 0.1);
+    }
+
+    .token-list {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: var(--color-surface);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border);
+      overflow: hidden;
+    }
+
+    .token-list th {
+      background-color: var(--color-surface-variant);
+      border-bottom: 2px solid var(--color-accent);
+      padding: var(--space-md);
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-accent);
+      text-align: left;
+    }
+
+    .token-list td {
+      padding: var(--space-md);
+      font-size: var(--font-size-sm);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .token-list tbody tr:hover {
+      background-color: var(--color-surface-hover);
+    }
+
+    .token-actions {
+      display: flex;
+      gap: var(--space-sm);
+    }
+
+    footer {
+      background-color: var(--color-surface);
+      border-top: 1px solid var(--color-border);
+      padding: var(--space-lg) var(--space-2xl);
+      text-align: center;
+      color: var(--color-text-muted);
+      font-size: var(--font-size-sm);
+    }
   </style>
 </head>
 <body>
@@ -21,12 +160,11 @@
   <main class="container">
     <section class="controls-row">
       <div>
-        <button id="btn-issue" class="btn btn-primary">Issue Token</button>
         <button id="btn-refresh" class="btn btn-secondary">Refresh List</button>
         <button id="btn-test" class="btn btn-warning">Test Tokenize</button>
       </div>
       <div>
-        <label>RPC Endpoint: <input id="rpc-url" value="http://besu-staging:8545"></label>
+        <label>Correlation ID: <input id="correlation-id" value="GARUDA-UI-00000000-0000-0000-0000-000000000000"></label>
       </div>
     </section>
 
@@ -43,51 +181,153 @@
     </section>
 
     <section>
-      <h2>Issue Token (Simulated)</h2>
-      <form id="issue-form">
-        <label>Owner Address: <input id="owner" required></label>
-        <label>Amount: <input id="amount" type="number" required></label>
-        <button class="btn btn-primary" type="submit">Submit</button>
+      <h2>Issue Token</h2>
+      <form id="tokenize-form">
+        <label>Batch ID: <input id="batch-id" value="BATCH-UI-001" required></label>
+        <label>Commodity Code: <input id="commodity-code" value="GABAH" required></label>
+        <label>Harvest Quantity (Kg): <input id="harvest-quantity" type="number" min="1" value="950" required></label>
+        <label>Reference Value (IDR): <input id="reference-value" type="number" min="1" value="7200000" required></label>
+        <button class="btn btn-primary" type="submit">Tokenize</button>
       </form>
-      <div id="issue-result" style="margin-top:1rem"></div>
+      <div id="tokenize-result" style="margin-top:1rem"></div>
       <div id="test-result" style="margin-top:0.5rem; font-style:italic; color:var(--color-muted)"></div>
+    </section>
+
+    <section>
+      <h2>Update Status</h2>
+      <form id="status-form">
+        <label>Token ID: <input id="status-token-id" placeholder="TKN-..." required></label>
+        <label>New Status:
+          <select id="new-status" required>
+            <option value="VERIFIED">VERIFIED</option>
+            <option value="COLLATERALIZED">COLLATERALIZED</option>
+            <option value="REJECTED">REJECTED</option>
+            <option value="RELEASED">RELEASED</option>
+          </select>
+        </label>
+        <label>Reason: <input id="status-reason" value="Operational review" required></label>
+        <button class="btn btn-primary" type="submit">Update Status</button>
+      </form>
+      <div id="status-result" style="margin-top:1rem"></div>
+    </section>
+
+    <section>
+      <h2>Verify Status</h2>
+      <form id="verify-form">
+        <label>Token ID: <input id="verify-token-id" placeholder="TKN-..." required></label>
+        <button class="btn btn-secondary" type="submit">Verify</button>
+      </form>
+      <div id="verify-result" style="margin-top:1rem"></div>
     </section>
   </main>
 
   <script>
-    // Minimal client-side helpers for testing tokenization flow.
-    async function postTokenize(payload){
-      try{
-        const res = await fetch('/api/v1/tokens/tokenize',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
-        const data = await res.json();
-        return {ok:res.ok,data};
-      }catch(e){ return {ok:false,error:e.message}; }
+    function correlationHeaders() {
+      return {
+        'content-type': 'application/json',
+        'x-correlation-id': document.getElementById('correlation-id').value.trim(),
+      };
     }
 
-    document.getElementById('issue-form').addEventListener('submit', async (ev)=>{
+    async function postJson(url, payload, method) {
+      try {
+        const response = await fetch(url, {
+          method,
+          headers: correlationHeaders(),
+          body: JSON.stringify(payload),
+        });
+        let data = null;
+        try { data = await response.json(); } catch { data = null; }
+        return { ok: response.ok, status: response.status, data };
+      } catch (error) {
+        return { ok: false, status: 0, error: error.message };
+      }
+    }
+
+    async function getJson(url) {
+      try {
+        const response = await fetch(url, {
+          headers: { 'x-correlation-id': document.getElementById('correlation-id').value.trim() },
+        });
+        let data = null;
+        try { data = await response.json(); } catch { data = null; }
+        return { ok: response.ok, status: response.status, data };
+      } catch (error) {
+        return { ok: false, status: 0, error: error.message };
+      }
+    }
+
+    function setResult(targetId, result, successLabel, failureLabel) {
+      const out = document.getElementById(targetId);
+      if (result.ok) {
+        out.textContent = `${successLabel}: ${JSON.stringify(result.data)}`;
+        return;
+      }
+      out.textContent = `${failureLabel}: ${result.error || JSON.stringify(result.data) || 'Request failed'}`;
+    }
+
+    document.getElementById('tokenize-form').addEventListener('submit', async (ev)=>{
       ev.preventDefault();
-      const owner = document.getElementById('owner').value;
-      const amount = Number(document.getElementById('amount').value);
-      const out = document.getElementById('issue-result');
-      out.textContent = 'Issuing...';
-      const r = await postTokenize({owner,amount});
-      if(r.ok) out.textContent = 'Issued: '+JSON.stringify(r.data);
-      else out.textContent = 'Error: '+(r.error||JSON.stringify(r.data));
+      const payload = {
+        batchId: document.getElementById('batch-id').value.trim(),
+        commodityCode: document.getElementById('commodity-code').value.trim(),
+        harvestQuantityKg: Number(document.getElementById('harvest-quantity').value),
+        referenceValueIdr: Number(document.getElementById('reference-value').value),
+      };
+      document.getElementById('tokenize-result').textContent = 'Tokenizing...';
+      const result = await postJson('/api/v1/tokens/tokenize', payload, 'POST');
+      setResult('tokenize-result', result, 'Tokenized', 'Tokenize failed');
+      if (result.ok && result.data?.data?.tokenId) {
+        document.getElementById('status-token-id').value = result.data.data.tokenId;
+        document.getElementById('verify-token-id').value = result.data.data.tokenId;
+      }
     });
 
     // Test button: sends a small sample payload to /api/v1/tokens/tokenize
     document.getElementById('btn-test').addEventListener('click', async ()=>{
-      const sample = { owner: '0x0000000000000000000000000000000000000000', amount: 1 };
+      const sample = {
+        batchId: 'BATCH-UI-TEST-001',
+        commodityCode: 'GABAH',
+        harvestQuantityKg: 1,
+        referenceValueIdr: 1,
+      };
       const tr = document.getElementById('test-result');
       tr.textContent = 'Running tokenize test...';
-      const res = await postTokenize(sample);
+      const res = await postJson('/api/v1/tokens/tokenize', sample, 'POST');
       if(res.ok){
         tr.style.color = 'var(--color-success)';
         tr.textContent = 'Test success: '+JSON.stringify(res.data);
+        if (res.data?.data?.tokenId) {
+          document.getElementById('status-token-id').value = res.data.data.tokenId;
+          document.getElementById('verify-token-id').value = res.data.data.tokenId;
+        }
       } else {
         tr.style.color = 'var(--color-danger)';
         tr.textContent = 'Test failed: '+(res.error||JSON.stringify(res.data));
       }
+    });
+
+    document.getElementById('status-form').addEventListener('submit', async (ev) => {
+      ev.preventDefault();
+      const tokenId = document.getElementById('status-token-id').value.trim();
+      const payload = {
+        newStatus: document.getElementById('new-status').value,
+        reason: document.getElementById('status-reason').value.trim(),
+      };
+      document.getElementById('status-result').textContent = 'Updating...';
+      const result = await postJson(`/api/v1/tokens/${encodeURIComponent(tokenId)}/status`, payload, 'PATCH');
+      setResult('status-result', result, 'Status updated', 'Status update failed');
+      if (result.ok) {
+        document.getElementById('verify-token-id').value = tokenId;
+      }
+    });
+
+    document.getElementById('verify-form').addEventListener('submit', async (ev) => {
+      ev.preventDefault();
+      const tokenId = document.getElementById('verify-token-id').value.trim();
+      document.getElementById('verify-result').textContent = 'Verifying...';
+      const result = await getJson(`/api/v1/tokens/${encodeURIComponent(tokenId)}/verify`);
+      setResult('verify-result', result, 'Status verified', 'Verify failed');
     });
   </script>
 
