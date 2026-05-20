@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Garuda Admin - Governance Dashboard</title>
+  <link rel="stylesheet" href="/css/design-system-tokens.css">
+  <style>
+    /* Dashboard-specific styles */
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background-color: var(--color-surface);
+      border-bottom: 2px solid var(--color-accent);
+      padding: var(--space-lg) var(--space-2xl);
+      box-shadow: var(--shadow-md);
+    }
+
+    header h1 {
+      margin: 0;
+      color: var(--color-accent);
+      font-size: var(--font-size-xl);
+    }
+
+    nav.breadcrumb {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-muted);
+      margin-top: var(--space-md);
+    }
+
+    nav.breadcrumb a {
+      color: var(--color-accent);
+      margin: 0 var(--space-xs);
+    }
+
+    main {
+      flex: 1;
+      padding: var(--space-2xl);
+    }
+
+    .controls {
+      display: flex;
+      gap: var(--space-md);
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-lg);
+      padding: var(--space-md);
+      background-color: var(--color-surface);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border);
+    }
+
+    .controls input[type="search"] {
+      flex: 1;
+      max-width: 400px;
+    }
+
+    .governance-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-lg);
+    }
+
+    @media (max-width: 1024px) {
+      .governance-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .release-card {
+      background-color: var(--color-surface);
+      border: 2px solid var(--color-accent);
+      border-radius: var(--radius-md);
+      padding: var(--space-md);
+      box-shadow: var(--shadow-md);
+      transition: all var(--transition-default);
+    }
+
+    .release-card:hover {
+      box-shadow: var(--shadow-lg);
+      border-color: var(--color-primary);
+    }
+
+    .release-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-md);
+      padding-bottom: var(--space-md);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .release-title {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-accent);
+      margin: 0;
+    }
+
+    .release-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-md);
+      margin-bottom: var(--space-md);
+      font-size: var(--font-size-sm);
+    }
+
+    .meta-item label {
+      display: inline;
+      color: var(--color-text-muted);
+      margin-right: var(--space-xs);
+    }
+
+    .meta-item strong {
+      color: var(--color-text);
+      font-weight: var(--font-weight-bold);
+    }
+
+    .release-actions {
+      display: flex;
+      gap: var(--space-sm);
+      margin-top: var(--space-md);
+    }
+
+    .release-actions button {
+      flex: 1;
+    }
+
+    .status-timeline {
+      margin-top: var(--space-lg);
+      padding-top: var(--space-lg);
+      border-top: 1px solid var(--color-border);
+    }
+
+    .timeline-item {
+      display: flex;
+      gap: var(--space-md);
+      margin-bottom: var(--space-md);
+      font-size: var(--font-size-sm);
+    }
+
+    .timeline-marker {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 2px solid;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .timeline-marker.approved {
+      background-color: var(--status-approved);
+      border-color: var(--status-approved);
+      color: white;
+    }
+
+    .timeline-marker.pending {
+      background-color: var(--status-pending);
+      border-color: var(--status-pending);
+      color: white;
+    }
+
+    .timeline-content {
+      flex: 1;
+    }
+
+    .timeline-content strong {
+      color: var(--color-text);
+      display: block;
+    }
+
+    .timeline-content small {
+      color: var(--color-text-muted);
+    }
+
+    /* Dashboard summary section */
+    .summary-section {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-lg);
+      margin-bottom: var(--space-2xl);
+    }
+
+    @media (max-width: 1024px) {
+      .summary-section {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .summary-section {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .summary-card {
+      background-color: var(--color-surface);
+      border-left: 4px solid;
+      border-radius: var(--radius-md);
+      padding: var(--space-lg);
+      text-align: center;
+    }
+
+    .summary-card.primary {
+      border-left-color: var(--color-accent);
+    }
+
+    .summary-card.success {
+      border-left-color: var(--color-success);
+    }
+
+    .summary-card.warning {
+      border-left-color: var(--color-warning);
+    }
+
+    .summary-card.error {
+      border-left-color: var(--color-error);
+    }
+
+    .summary-value {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-2xl);
+      font-weight: var(--font-weight-bold);
+      margin: var(--space-sm) 0;
+    }
+
+    .summary-label {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-muted);
+    }
+
+    footer {
+      background-color: var(--color-surface);
+      border-top: 1px solid var(--color-border);
+      padding: var(--space-lg) var(--space-2xl);
+      text-align: center;
+      font-size: var(--font-size-xs);
+      color: var(--color-text-muted);
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header>
+    <h1>🏛️ Garuda Admin - Governance Dashboard</h1>
+    <nav class="breadcrumb">
+      <a href="/admin">Home</a> / <span>Governance</span> / <span>Release Management</span>
+    </nav>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="container">
+    <!-- SUMMARY SECTION -->
+    <section class="summary-section">
+      <div class="summary-card primary">
+        <div class="summary-label">Total Releases</div>
+        <div class="summary-value">24</div>
+      </div>
+      <div class="summary-card success">
+        <div class="summary-label">Approved</div>
+        <div class="summary-value">18</div>
+      </div>
+      <div class="summary-card warning">
+        <div class="summary-label">Pending Review</div>
+        <div class="summary-value">4</div>
+      </div>
+      <div class="summary-card error">
+        <div class="summary-label">Rejected</div>
+        <div class="summary-value">2</div>
+      </div>
+    </section>
+
+    <!-- CONTROLS -->
+    <div class="controls">
+      <input type="search" placeholder="Search releases...">
+      <div class="flex gap-md">
+        <button class="btn btn-secondary">Filter</button>
+        <button class="btn btn-primary">+ New Release</button>
+      </div>
+    </div>
+
+    <!-- ALERT (if there are pending items) -->
+    <div class="alert alert-warning">
+      <strong>⚠️ 4 Releases Pending Review</strong><br>
+      These releases are awaiting governance approval. Review and take action within 48 hours.
+    </div>
+
+    <!-- GOVERNANCE GRID -->
+    <section class="governance-grid">
+      <!-- RELEASE CARD 1: Pending -->
+      <div class="release-card">
+        <div class="release-header">
+          <h3 class="release-title">Release v2.3.0</h3>
+          <span class="badge status-pending">Pending Review</span>
+        </div>
+
+        <div class="release-meta">
+          <div class="meta-item">
+            <label>Submitted:</label>
+            <strong>2026-05-19</strong>
+          </div>
+          <div class="meta-item">
+            <label>Version:</label>
+            <strong>2.3.0</strong>
+          </div>
+          <div class="meta-item">
+            <label>Tokens:</label>
+            <strong>1,500,000 PADI</strong>
+          </div>
+          <div class="meta-item">
+            <label>Value:</label>
+            <strong>Rp 2.25B</strong>
+          </div>
+        </div>
+
+        <p style="font-size: var(--font-size-sm); color: var(--color-text-muted); margin-bottom: var(--space-md);">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Governance review required for token issuance authorization.
+        </p>
+
+        <div class="release-actions">
+          <button class="btn btn-approve">✓ Approve</button>
+          <button class="btn btn-reject">✗ Reject</button>
+        </div>
+
+        <div class="status-timeline">
+          <div class="timeline-item">
+            <div class="timeline-marker approved">✓</div>
+            <div class="timeline-content">
+              <strong>Submitted for Review</strong>
+              <small>May 19, 2026 at 14:30 UTC</small>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-marker pending">⏱</div>
+            <div class="timeline-content">
+              <strong>Awaiting Governance Vote</strong>
+              <small>Pending since May 19, 2026</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RELEASE CARD 2: Approved -->
+      <div class="release-card">
+        <div class="release-header">
+          <h3 class="release-title">Release v2.2.5</h3>
+          <span class="badge status-approved">Approved</span>
+        </div>
+
+        <div class="release-meta">
+          <div class="meta-item">
+            <label>Approved:</label>
+            <strong>2026-05-18</strong>
+          </div>
+          <div class="meta-item">
+            <label>Version:</label>
+            <strong>2.2.5</strong>
+          </div>
+          <div class="meta-item">
+            <label>Tokens:</label>
+            <strong>1,200,000 PADI</strong>
+          </div>
+          <div class="meta-item">
+            <label>Value:</label>
+            <strong>Rp 1.80B</strong>
+          </div>
+        </div>
+
+        <p style="font-size: var(--font-size-sm); color: var(--color-text-muted); margin-bottom: var(--space-md);">
+          Agricultural commodity tokenization release with enhanced compliance checks and audit trail integration.
+        </p>
+
+        <div class="release-actions">
+          <button class="btn btn-secondary" disabled>Already Approved</button>
+          <button class="btn btn-secondary">View Details</button>
+        </div>
+
+        <div class="status-timeline">
+          <div class="timeline-item">
+            <div class="timeline-marker approved">✓</div>
+            <div class="timeline-content">
+              <strong>Submitted for Review</strong>
+              <small>May 17, 2026 at 10:15 UTC</small>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-marker approved">✓</div>
+            <div class="timeline-content">
+              <strong>Governance Approved</strong>
+              <small>May 18, 2026 at 16:45 UTC by Admin Council</small>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-marker approved">✓</div>
+            <div class="timeline-content">
+              <strong>Released to Market</strong>
+              <small>May 18, 2026 at 17:30 UTC</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RELEASE CARD 3: Pending -->
+      <div class="release-card">
+        <div class="release-header">
+          <h3 class="release-title">Release v2.4.0-beta</h3>
+          <span class="badge status-in-progress">In Progress</span>
+        </div>
+
+        <div class="release-meta">
+          <div class="meta-item">
+            <label>Created:</label>
+            <strong>2026-05-20</strong>
+          </div>
+          <div class="meta-item">
+            <label>Version:</label>
+            <strong>2.4.0-beta</strong>
+          </div>
+          <div class="meta-item">
+            <label>Tokens:</label>
+            <strong>2,000,000 PADI</strong>
+          </div>
+          <div class="meta-item">
+            <label>Value:</label>
+            <strong>Rp 3.00B</strong>
+          </div>
+        </div>
+
+        <p style="font-size: var(--font-size-sm); color: var(--color-text-muted); margin-bottom: var(--space-md);">
+          Beta release for stress testing governance protocols and audit trail verification systems.
+        </p>
+
+        <div class="release-actions">
+          <button class="btn btn-secondary" disabled>In Preparation</button>
+          <button class="btn btn-secondary">Edit</button>
+        </div>
+
+        <div class="status-timeline">
+          <div class="timeline-item">
+            <div class="timeline-marker pending">⏱</div>
+            <div class="timeline-content">
+              <strong>Under Preparation</strong>
+              <small>Started May 20, 2026 at 08:00 UTC</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RELEASE CARD 4: Rejected -->
+      <div class="release-card">
+        <div class="release-header">
+          <h3 class="release-title">Release v2.1.9</h3>
+          <span class="badge status-rejected">Rejected</span>
+        </div>
+
+        <div class="release-meta">
+          <div class="meta-item">
+            <label>Rejected:</label>
+            <strong>2026-05-16</strong>
+          </div>
+          <div class="meta-item">
+            <label>Version:</label>
+            <strong>2.1.9</strong>
+          </div>
+          <div class="meta-item">
+            <label>Tokens:</label>
+            <strong>800,000 PADI</strong>
+          </div>
+          <div class="meta-item">
+            <label>Value:</label>
+            <strong>Rp 1.20B</strong>
+          </div>
+        </div>
+
+        <p style="font-size: var(--font-size-sm); color: var(--color-text-muted); margin-bottom: var(--space-md);">
+          Compliance audit identified critical gaps in governance documentation. Requires revision.
+        </p>
+
+        <div class="release-actions">
+          <button class="btn btn-secondary">View Feedback</button>
+          <button class="btn btn-secondary">Resubmit</button>
+        </div>
+
+        <div class="status-timeline">
+          <div class="timeline-item">
+            <div class="timeline-marker approved">✓</div>
+            <div class="timeline-content">
+              <strong>Submitted for Review</strong>
+              <small>May 15, 2026 at 09:30 UTC</small>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-marker pending">⏱</div>
+            <div class="timeline-content">
+              <strong>Under Review</strong>
+              <small>May 15-16, 2026</small>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-marker pending" style="background-color: var(--status-rejected); border-color: var(--status-rejected);">✗</div>
+            <div class="timeline-content">
+              <strong>Governance Rejected</strong>
+              <small>May 16, 2026 at 11:20 UTC by Compliance Officer</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 Garuda-Link Governance System | Design System v1.0 | All rights reserved</p>
+  </footer>
+</body>
+</html>
