@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Garuda Admin - Token Management</title>
+  <link rel="stylesheet" href="/css/design-system-tokens.css">
+  <style>
+    .token-list td, .token-list th { font-size: var(--font-size-sm); }
+    .token-actions { display:flex; gap: var(--space-sm); }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🪙 Garuda Admin - Token Management</h1>
+    <nav class="breadcrumb">
+      <a href="/admin-governance.html">Home</a> / <span>Token Management</span>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="controls-row">
+      <div>
+        <button id="btn-issue" class="btn btn-primary">Issue Token</button>
+        <button id="btn-refresh" class="btn btn-secondary">Refresh List</button>
+        <button id="btn-test" class="btn btn-warning">Test Tokenize</button>
+      </div>
+      <div>
+        <label>RPC Endpoint: <input id="rpc-url" value="http://besu-staging:8545"></label>
+      </div>
+    </section>
+
+    <section>
+      <h2>Active Tokens</h2>
+      <table class="token-list" style="width:100%; border-collapse:collapse;">
+        <thead>
+          <tr><th>Token ID</th><th>Owner</th><th>Quantity</th><th>Issued At</th><th>Actions</th></tr>
+        </thead>
+        <tbody id="tokens-body">
+          <tr><td>TOK-00001</td><td>0xabc...123</td><td>1,000</td><td>2026-05-19</td><td class="token-actions"><button class="btn">Revoke</button><button class="btn">Details</button></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Issue Token (Simulated)</h2>
+      <form id="issue-form">
+        <label>Owner Address: <input id="owner" required></label>
+        <label>Amount: <input id="amount" type="number" required></label>
+        <button class="btn btn-primary" type="submit">Submit</button>
+      </form>
+      <div id="issue-result" style="margin-top:1rem"></div>
+      <div id="test-result" style="margin-top:0.5rem; font-style:italic; color:var(--color-muted)"></div>
+    </section>
+  </main>
+
+  <script>
+    // Minimal client-side helpers for testing tokenization flow.
+    async function postTokenize(payload){
+      try{
+        const res = await fetch('/api/v1/tokens/tokenize',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+        const data = await res.json();
+        return {ok:res.ok,data};
+      }catch(e){ return {ok:false,error:e.message}; }
+    }
+
+    document.getElementById('issue-form').addEventListener('submit', async (ev)=>{
+      ev.preventDefault();
+      const owner = document.getElementById('owner').value;
+      const amount = Number(document.getElementById('amount').value);
+      const out = document.getElementById('issue-result');
+      out.textContent = 'Issuing...';
+      const r = await postTokenize({owner,amount});
+      if(r.ok) out.textContent = 'Issued: '+JSON.stringify(r.data);
+      else out.textContent = 'Error: '+(r.error||JSON.stringify(r.data));
+    });
+
+    // Test button: sends a small sample payload to /api/v1/tokens/tokenize
+    document.getElementById('btn-test').addEventListener('click', async ()=>{
+      const sample = { owner: '0x0000000000000000000000000000000000000000', amount: 1 };
+      const tr = document.getElementById('test-result');
+      tr.textContent = 'Running tokenize test...';
+      const res = await postTokenize(sample);
+      if(res.ok){
+        tr.style.color = 'var(--color-success)';
+        tr.textContent = 'Test success: '+JSON.stringify(res.data);
+      } else {
+        tr.style.color = 'var(--color-danger)';
+        tr.textContent = 'Test failed: '+(res.error||JSON.stringify(res.data));
+      }
+    });
+  </script>
+
+  <footer>
+    <p>© 2026 Garuda-Link Token Management</p>
+  </footer>
+</body>
+</html>

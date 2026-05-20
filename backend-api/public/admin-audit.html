@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Garuda Admin - Audit Trail</title>
+  <link rel="stylesheet" href="/css/design-system-tokens.css">
+  <style>
+    /* Minor adjustments for audit page */
+    .audit-table th, .audit-table td { font-size: var(--font-size-sm); }
+    .audit-filter { display:flex; gap: var(--space-md); align-items:center; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🔍 Garuda Admin - Audit Trail</h1>
+    <nav class="breadcrumb">
+      <a href="/admin-governance.html">Home</a> / <span>Audit</span>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="summary-section">
+      <div class="summary-card primary">
+        <div class="summary-label">Total Events</div>
+        <div class="summary-value">11,432</div>
+      </div>
+      <div class="summary-card success">
+        <div class="summary-label">Errors</div>
+        <div class="summary-value">12</div>
+      </div>
+      <div class="summary-card warning">
+        <div class="summary-label">Warnings</div>
+        <div class="summary-value">48</div>
+      </div>
+      <div class="summary-card info">
+        <div class="summary-label">Last 24h</div>
+        <div class="summary-value">1,204</div>
+      </div>
+    </section>
+
+    <div class="controls">
+      <div class="audit-filter">
+        <input type="search" placeholder="Search events by ID, user, or action">
+        <select>
+          <option>All Levels</option>
+          <option>Info</option>
+          <option>Warning</option>
+          <option>Error</option>
+        </select>
+      </div>
+      <div class="flex gap-md">
+        <button class="btn btn-secondary">Export CSV</button>
+        <button class="btn btn-primary">Refresh</button>
+      </div>
+    </div>
+
+    <table class="audit-table" style="width:100%; border-collapse:collapse;">
+      <thead>
+        <tr>
+          <th>Timestamp</th>
+          <th>Event ID</th>
+          <th>User</th>
+          <th>Action</th>
+          <th>Level</th>
+          <th>Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>2026-05-20 05:12:34</td>
+          <td>EVT-000123</td>
+          <td>admin@example.com</td>
+          <td>Approve Release v2.3.0</td>
+          <td><span class="badge badge-success">Info</span></td>
+          <td>Transaction 0xabc... committed</td>
+        </tr>
+        <tr>
+          <td>2026-05-19 20:45:10</td>
+          <td>EVT-000122</td>
+          <td>auditor@example.com</td>
+          <td>Token Burn</td>
+          <td><span class="badge badge-warning">Warning</span></td>
+          <td>Quantity mismatch detected</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </main>
+
+  <footer>
+    <p>© 2026 Garuda-Link Audit | Design System v1.0</p>
+  </footer>
+</body>
+</html>
