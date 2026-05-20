@@ -25,7 +25,11 @@ services:
       - garuda-staging
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000/api/v1/health"]
+      test:
+        [
+          "CMD-SHELL",
+          "node -e \"fetch('http://localhost:3000/api/v1/health').then((response) => process.exit(response.ok ? 0 : 1)).catch(() => process.exit(1))\"",
+        ]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -51,10 +55,18 @@ services:
       - "30303:30303"
     volumes:
       - besu-staging-data:/data
-      - ./besu/config/staging:/config
     command: >
       --data-path=/data
-      --config-file=/config/config.toml
+      --network=dev
+      --rpc-http-enabled=true
+      --rpc-http-host=0.0.0.0
+      --rpc-http-port=8545
+      --rpc-http-api=ETH,NET,WEB3
+      --rpc-ws-enabled=true
+      --rpc-ws-host=0.0.0.0
+      --rpc-ws-port=8546
+      --host-allowlist=*
+      --rpc-http-cors-origins=*
     networks:
       - garuda-staging
     restart: unless-stopped
@@ -82,7 +94,11 @@ services:
       - garuda-staging
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/health"]
+      test:
+        [
+          "CMD-SHELL",
+          "python -c \"from urllib.request import urlopen; import sys; sys.exit(0 if urlopen('http://localhost:8000/health').status == 200 else 1)\"",
+        ]
       interval: 30s
       timeout: 10s
       retries: 3
