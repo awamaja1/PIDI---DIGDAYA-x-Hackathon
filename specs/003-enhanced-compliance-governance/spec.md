@@ -2,7 +2,7 @@
 
 **Feature Branch**: `003-enhanced-compliance-governance`  
 **Created**: 2026-04-22  
-**Status**: Draft  
+**Status**: Completed - verified in staging
 **Input**: Peningkatan kontrol kepatuhan, governance, dan readiness audit untuk baseline GARUDA-LINK yang sudah berjalan.
 **Changelog**: Lihat [CHANGELOG.md](../../CHANGELOG.md) untuk ringkasan rilis terbaru.
 
@@ -113,6 +113,6 @@ Sebagai Product Owner, saya ingin readiness checklist rilis yang terhubung ke ev
 
 ## Open Questions
 
-- Apakah evidence bundle perlu format tunggal (JSON-only) atau juga versi human-readable (Markdown/PDF)?
-- Apakah governance summary disimpan per hari, per rilis, atau keduanya?
-- Batas minimum kontrol yang dianggap wajib lulus untuk keputusan go-live internal?
+- [RESOLVED] Evidence bundle menggunakan JSON sebagai format utama untuk validasi otomatis.
+- [RESOLVED] Governance summary tersedia untuk mode harian dan release.
+- [RESOLVED] Keputusan go-live internal memakai readiness checklist berbasis evidence dengan override yang diaudit.

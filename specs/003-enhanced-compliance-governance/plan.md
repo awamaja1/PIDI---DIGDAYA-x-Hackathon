@@ -1,6 +1,7 @@
 # Rencana Implementasi: Enhanced Compliance & Governance untuk GARUDA-LINK
 
 **Branch**: `003-enhanced-compliance-governance` | **Tanggal**: 2026-04-22 | **Spec**: [spec.md](./spec.md)
+**Status**: Implemented and verified in staging
 **Input**: Feature specification dari `/specs/003-enhanced-compliance-governance/spec.md`
 **Changelog**: Lihat [CHANGELOG.md](../../CHANGELOG.md) untuk ringkasan rilis terbaru.
 
@@ -156,7 +157,7 @@ backend-api/
 
 ## Post-Design Constitution Re-check (Phase 1)
 
-**Status**: PASS (planned)
+**Status**: PASS (verified)
 
 - Gate 1: traceability requirement ke output governance terdefinisi.
 - Gate 2: kontrol compliance terpetakan ke evidence field.

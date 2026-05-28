@@ -17,6 +17,14 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 ### Added
+- [TODO] Reserve this section for the next feature after v0.2.0.
+
+### Changed
+- [TODO] Add any post-release documentation or implementation updates here.
+
+## [v0.2.0] - 2026-05-19
+
+### Added
 - Governance evidence endpoint for correlation-based evidence bundles.
 - Governance summary endpoint for daily and release control views.
 - Release readiness endpoint with GO, CONDITIONAL_GO, and NO_GO decisions.

@@ -4,15 +4,16 @@
 **Prerequisites**: `spec.md`, `plan.md`, `research.md`, `data-model.md`
 
 **Tests**: Required for this feature because `spec.md` defines independent test criteria for evidence determinism, governance summary accuracy, and release readiness traceability.
+**Status**: Completed and verified in staging
 
 ## Phase 1: Setup (Shared Infrastructure)
 
 **Purpose**: Menyiapkan fondasi endpoint governance dan baseline testing.
 
-- [ ] T001 Add governance route scaffold in `backend-api/src/api/routes/governance.js`; DoD: route file exists and exports router instance.
-- [ ] T002 [P] Register governance router in `backend-api/src/api/routes/index.js`; DoD: `/api/v1/governance` path mounted without breaking existing routes.
-- [ ] T003 [P] Create governance service directory in `backend-api/src/services/governance/`; DoD: folder and index export ready for service wiring.
-- [ ] T004 Create governance test scaffolding in `backend-api/tests/contract/governance.contract.test.js` and `backend-api/tests/integration/governance.integration.test.js`; DoD: tests runnable with placeholder assertions.
+- [x] T001 Add governance route scaffold in `backend-api/src/api/routes/governance.js`; DoD: route file exists and exports router instance.
+- [x] T002 [P] Register governance router in `backend-api/src/api/routes/index.js`; DoD: `/api/v1/governance` path mounted without breaking existing routes.
+- [x] T003 [P] Create governance service directory in `backend-api/src/services/governance/`; DoD: folder and index export ready for service wiring.
+- [x] T004 Create governance test scaffolding in `backend-api/tests/contract/governance.contract.test.js` and `backend-api/tests/integration/governance.integration.test.js`; DoD: tests runnable with placeholder assertions.
 
 ---
 
@@ -22,12 +23,12 @@
 
 **CRITICAL**: No user story implementation starts before this phase is done.
 
-- [ ] T005 Implement evidence bundle builder in `backend-api/src/services/governance/buildEvidenceBundle.js`; DoD: builds deterministic JSON payload from `correlationId` using existing audit source.
-- [ ] T006 [P] Implement governance status classifier in `backend-api/src/services/governance/classifyControlStatus.js`; DoD: maps domain results into `pass|warn|fail` consistently.
-- [ ] T007 [P] Implement evidence field whitelist filter in `backend-api/src/services/governance/minimizeEvidenceFields.js`; DoD: strips non-whitelisted sensitive fields to enforce CR-002.
-- [ ] T008 Implement summary aggregator in `backend-api/src/services/governance/buildGovernanceSummary.js`; DoD: supports `period=daily` and `period=release` with `overall_status` derived from domain worst-case.
-- [ ] T009 [P] Implement readiness checklist evaluator in `backend-api/src/services/governance/evaluateReleaseReadiness.js`; DoD: derives checklist items from evidence and summary with mandatory `evidence_ref`.
-- [ ] T010 Implement governance service façade in `backend-api/src/services/governance/index.js`; DoD: exposes `getEvidenceBundle`, `getSummary`, and `getReleaseReadiness` methods.
+- [x] T005 Implement evidence bundle builder in `backend-api/src/services/governance/buildEvidenceBundle.js`; DoD: builds deterministic JSON payload from `correlationId` using existing audit source.
+- [x] T006 [P] Implement governance status classifier in `backend-api/src/services/governance/classifyControlStatus.js`; DoD: maps domain results into `pass|warn|fail` consistently.
+- [x] T007 [P] Implement evidence field whitelist filter in `backend-api/src/services/governance/minimizeEvidenceFields.js`; DoD: strips non-whitelisted sensitive fields to enforce CR-002.
+- [x] T008 Implement summary aggregator in `backend-api/src/services/governance/buildGovernanceSummary.js`; DoD: supports `period=daily` and `period=release` with `overall_status` derived from domain worst-case.
+- [x] T009 [P] Implement readiness checklist evaluator in `backend-api/src/services/governance/evaluateReleaseReadiness.js`; DoD: derives checklist items from evidence and summary with mandatory `evidence_ref`.
+- [x] T010 Implement governance service façade in `backend-api/src/services/governance/index.js`; DoD: exposes `getEvidenceBundle`, `getSummary`, and `getReleaseReadiness` methods.
 
 **Checkpoint**: Core governance logic is available and reusable across all user stories.
 
@@ -41,16 +42,16 @@
 
 ### Tests for User Story 1
 
-- [ ] T011 [P] [US1] Add contract test for `GET /api/v1/governance/evidence/{correlationId}` in `backend-api/tests/contract/governance-evidence.contract.test.js`; DoD: response shape validates required fields for success and fallback.
-- [ ] T012 [P] [US1] Add integration test for evidence success case in `backend-api/tests/integration/governance-evidence.success.test.js`; DoD: contains transaction metadata, audit trace, and compliance tags.
-- [ ] T013 [US1] Add integration test for evidence fallback case in `backend-api/tests/integration/governance-evidence.fallback.test.js`; DoD: includes fallback reason and deterministic context fields.
-- [ ] T014 [US1] Add determinism test for repeated evidence query in `backend-api/tests/integration/governance-evidence.determinism.test.js`; DoD: same `correlationId` returns identical payload across repeated reads.
+- [x] T011 [P] [US1] Add contract test for `GET /api/v1/governance/evidence/{correlationId}` in `backend-api/tests/contract/governance-evidence.contract.test.js`; DoD: response shape validates required fields for success and fallback.
+- [x] T012 [P] [US1] Add integration test for evidence success case in `backend-api/tests/integration/governance-evidence.success.test.js`; DoD: contains transaction metadata, audit trace, and compliance tags.
+- [x] T013 [US1] Add integration test for evidence fallback case in `backend-api/tests/integration/governance-evidence.fallback.test.js`; DoD: includes fallback reason and deterministic context fields.
+- [x] T014 [US1] Add determinism test for repeated evidence query in `backend-api/tests/integration/governance-evidence.determinism.test.js`; DoD: same `correlationId` returns identical payload across repeated reads.
 
 ### Implementation for User Story 1
 
-- [ ] T015 [P] [US1] Implement evidence endpoint handler in `backend-api/src/api/routes/governance.js`; DoD: `GET /evidence/:correlationId` returns deterministic bundle or not-found domain response.
-- [ ] T016 [US1] Add correlation ID validator in `backend-api/src/api/validators/correlationId.js`; DoD: enforces `GARUDA-<uuid>` format for governance queries.
-- [ ] T017 [US1] Integrate compliance tags enrichment in `backend-api/src/services/governance/buildEvidenceBundle.js`; DoD: tags include relevant `CR-*` indicators when available.
+- [x] T015 [P] [US1] Implement evidence endpoint handler in `backend-api/src/api/routes/governance.js`; DoD: `GET /evidence/:correlationId` returns deterministic bundle or not-found domain response.
+- [x] T016 [US1] Add correlation ID validator in `backend-api/src/api/validators/correlationId.js`; DoD: enforces `GARUDA-<uuid>` format for governance queries.
+- [x] T017 [US1] Integrate compliance tags enrichment in `backend-api/src/services/governance/buildEvidenceBundle.js`; DoD: tags include relevant `CR-*` indicators when available.
 
 **Checkpoint**: US1 independently demoable as MVP.
 
@@ -64,16 +65,16 @@
 
 ### Tests for User Story 2
 
-- [ ] T018 [P] [US2] Add contract test for `GET /api/v1/governance/summary` in `backend-api/tests/contract/governance-summary.contract.test.js`; DoD: validates `period`, `overall_status`, and `control_domains` schema.
-- [ ] T019 [P] [US2] Add integration test for daily summary in `backend-api/tests/integration/governance-summary.daily.test.js`; DoD: returns aggregated statuses with evidence coverage.
-- [ ] T020 [US2] Add integration test for release summary in `backend-api/tests/integration/governance-summary.release.test.js`; DoD: supports release key and consistent domain status derivation.
-- [ ] T021 [US2] Add integration test for warn/fail drill-down in `backend-api/tests/integration/governance-summary.drilldown.test.js`; DoD: includes `affected_correlations` and `evidence_refs` for warn/fail domains.
+- [x] T018 [P] [US2] Add contract test for `GET /api/v1/governance/summary` in `backend-api/tests/contract/governance-summary.contract.test.js`; DoD: validates `period`, `overall_status`, and `control_domains` schema.
+- [x] T019 [P] [US2] Add integration test for daily summary in `backend-api/tests/integration/governance-summary.daily.test.js`; DoD: returns aggregated statuses with evidence coverage.
+- [x] T020 [US2] Add integration test for release summary in `backend-api/tests/integration/governance-summary.release.test.js`; DoD: supports release key and consistent domain status derivation.
+- [x] T021 [US2] Add integration test for warn/fail drill-down in `backend-api/tests/integration/governance-summary.drilldown.test.js`; DoD: includes `affected_correlations` and `evidence_refs` for warn/fail domains.
 
 ### Implementation for User Story 2
 
-- [ ] T022 [P] [US2] Implement summary endpoint handler in `backend-api/src/api/routes/governance.js`; DoD: `GET /summary` accepts `period` and optional `key` query params.
-- [ ] T023 [US2] Extend summary aggregator logic in `backend-api/src/services/governance/buildGovernanceSummary.js`; DoD: applies threshold rules and confidence handling for partial audit data.
-- [ ] T024 [US2] Add domain mapping utility in `backend-api/src/services/governance/mapControlDomains.js`; DoD: computes statuses for `AUDIT_TRACE`, `FALLBACK_DETERMINISM`, `DATA_PROTECTION`, `SECURITY_READINESS`.
+- [x] T022 [P] [US2] Implement summary endpoint handler in `backend-api/src/api/routes/governance.js`; DoD: `GET /summary` accepts `period` and optional `key` query params.
+- [x] T023 [US2] Extend summary aggregator logic in `backend-api/src/services/governance/buildGovernanceSummary.js`; DoD: applies threshold rules and confidence handling for partial audit data.
+- [x] T024 [US2] Add domain mapping utility in `backend-api/src/services/governance/mapControlDomains.js`; DoD: computes statuses for `AUDIT_TRACE`, `FALLBACK_DETERMINISM`, `DATA_PROTECTION`, `SECURITY_READINESS`.
 
 **Checkpoint**: US2 independently testable after US1.
 
@@ -87,16 +88,16 @@
 
 ### Tests for User Story 3
 
-- [ ] T025 [P] [US3] Add contract test for `GET /api/v1/governance/release-readiness` in `backend-api/tests/contract/governance-readiness.contract.test.js`; DoD: validates checklist item fields and decision enum.
-- [ ] T026 [P] [US3] Add integration test for readiness derivation in `backend-api/tests/integration/governance-readiness.derivation.test.js`; DoD: checklist statuses derive from evidence and summary, not manual input.
-- [ ] T027 [US3] Add integration test for fail-critical decision logic in `backend-api/tests/integration/governance-readiness.decision.test.js`; DoD: critical fail forces `NO_GO`.
-- [ ] T028 [US3] Add integration test for override traceability in `backend-api/tests/integration/governance-readiness.override.test.js`; DoD: override includes actor, reason, timestamp, and original evidence trace.
+- [x] T025 [P] [US3] Add contract test for `GET /api/v1/governance/release-readiness` in `backend-api/tests/contract/governance-readiness.contract.test.js`; DoD: validates checklist item fields and decision enum.
+- [x] T026 [P] [US3] Add integration test for readiness derivation in `backend-api/tests/integration/governance-readiness.derivation.test.js`; DoD: checklist statuses derive from evidence and summary, not manual input.
+- [x] T027 [US3] Add integration test for fail-critical decision logic in `backend-api/tests/integration/governance-readiness.decision.test.js`; DoD: critical fail forces `NO_GO`.
+- [x] T028 [US3] Add integration test for override traceability in `backend-api/tests/integration/governance-readiness.override.test.js`; DoD: override includes actor, reason, timestamp, and original evidence trace.
 
 ### Implementation for User Story 3
 
-- [ ] T029 [P] [US3] Implement readiness endpoint handler in `backend-api/src/api/routes/governance.js`; DoD: `GET /release-readiness` accepts release candidate key.
-- [ ] T030 [US3] Implement checklist item generator in `backend-api/src/services/governance/evaluateReleaseReadiness.js`; DoD: every item includes mandatory `evidence_ref`.
-- [ ] T031 [US3] Implement decision rules utility in `backend-api/src/services/governance/decideGoNoGo.js`; DoD: returns `GO|CONDITIONAL_GO|NO_GO` based on checklist severities and statuses.
+- [x] T029 [P] [US3] Implement readiness endpoint handler in `backend-api/src/api/routes/governance.js`; DoD: `GET /release-readiness` accepts release candidate key.
+- [x] T030 [US3] Implement checklist item generator in `backend-api/src/services/governance/evaluateReleaseReadiness.js`; DoD: every item includes mandatory `evidence_ref`.
+- [x] T031 [US3] Implement decision rules utility in `backend-api/src/services/governance/decideGoNoGo.js`; DoD: returns `GO|CONDITIONAL_GO|NO_GO` based on checklist severities and statuses.
 
 **Checkpoint**: US3 independently testable after US1+US2 core logic.
 
@@ -106,11 +107,11 @@
 
 **Purpose**: Stabilize quality, observability, and documentation for handover readiness.
 
-- [ ] T032 [P] Add governance verification script in `backend-api/scripts/verify-governance-evidence.ps1`; DoD: checks deterministic evidence and required fields for sample `correlationId`.
-- [ ] T033 [P] Add governance summary verification script in `backend-api/scripts/verify-governance-summary.ps1`; DoD: validates domain status completeness and worst-case overall status derivation.
-- [ ] T034 Update quickstart docs in `specs/003-enhanced-compliance-governance/quickstart.md`; DoD: includes run commands and expected outputs for US1-US3 validations.
-- [ ] T035 Add requirement checklist in `specs/003-enhanced-compliance-governance/checklists/requirements.md`; DoD: maps FR/NFR/CR/HA to concrete test evidence links.
-- [ ] T036 Run architecture boundary regression test in `ai-engine/tests/test_no_direct_dlt_calls.py`; DoD: confirms Feature 003 introduces no AI->DLT direct dependency.
+- [x] T032 [P] Add governance verification script in `backend-api/scripts/verify-governance-evidence.ps1`; DoD: checks deterministic evidence and required fields for sample `correlationId`.
+- [x] T033 [P] Add governance summary verification script in `backend-api/scripts/verify-governance-summary.ps1`; DoD: validates domain status completeness and worst-case overall status derivation.
+- [x] T034 Update quickstart docs in `specs/003-enhanced-compliance-governance/quickstart.md`; DoD: includes run commands and expected outputs for US1-US3 validations.
+- [x] T035 Add requirement checklist in `specs/003-enhanced-compliance-governance/checklists/requirements.md`; DoD: maps FR/NFR/CR/HA to concrete test evidence links.
+- [x] T036 Run architecture boundary regression test in `ai-engine/tests/test_no_direct_dlt_calls.py`; DoD: confirms Feature 003 introduces no AI->DLT direct dependency.
 
 ---
 

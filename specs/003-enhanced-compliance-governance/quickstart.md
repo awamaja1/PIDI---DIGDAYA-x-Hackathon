@@ -45,7 +45,7 @@ Ekspektasi:
 ## 4. Verifikasi Release Readiness
 
 ```powershell
-Invoke-RestMethod "http://localhost:3000/api/v1/governance/release-readiness?releaseCandidate=v0.2.0-rc1"
+Invoke-RestMethod "http://localhost:3000/api/v1/governance/release-readiness?releaseCandidate=v0.2.0"
 ```
 
 Ekspektasi:

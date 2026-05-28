@@ -100,6 +100,7 @@ Lihat [specs/002-smart-contract-integration/quickstart.md](specs/002-smart-contr
 - Release readiness checklist dengan GO/CONDITIONAL_GO/NO_GO decision logic
 - Override traceability untuk compliance audit
 - 17 integration tests + 12 contract tests validasi lengkap
+- Dirilis sebagai v0.2.0 dan diverifikasi di staging
 
 **Branch**: `003-enhanced-compliance-governance`  
 **Specs**: [specs/003-enhanced-compliance-governance/](specs/003-enhanced-compliance-governance/)  
@@ -107,6 +108,10 @@ Lihat [specs/002-smart-contract-integration/quickstart.md](specs/002-smart-contr
 - GET `/api/v1/governance/evidence/:correlationId` - Evidence bundle
 - GET `/api/v1/governance/summary?period=daily|release&key=...` - Summary aggregation
 - GET `/api/v1/governance/release-readiness?releaseCandidate=...` - Readiness checklist
+
+**Tahap Berikutnya**:
+- Production readiness hardening untuk observability, rollback, dan monitoring.
+- Penyusunan scope Feature 004 berdasarkan gap bisnis dan prioritas berikutnya.
 
 ## 📦 Rilis & Changelog
 

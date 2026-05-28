@@ -435,13 +435,13 @@ async def get_compliance_with_fallback(self, correlation_id: str):
 
 ### Validation Checklist
 
-- [ ] AI Engine imports only REST client (httpx), not blockchain libraries
-- [ ] All governance queries include X-Correlation-ID header
-- [ ] Compliance context is optional (graceful degradation)
-- [ ] No direct Besu/DLT imports in AI code
-- [ ] Timeout protection (5s max) on governance calls
-- [ ] Proper error handling for network failures
-- [ ] Logs include correlation ID for traceability
+- [x] AI Engine imports only REST client (httpx), not blockchain libraries
+- [x] All governance queries include X-Correlation-ID header
+- [x] Compliance context is optional (graceful degradation)
+- [x] No direct Besu/DLT imports in AI code
+- [x] Timeout protection (5s max) on governance calls
+- [x] Proper error handling for network failures
+- [x] Logs include correlation ID for traceability
 
 ---
 

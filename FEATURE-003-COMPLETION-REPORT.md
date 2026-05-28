@@ -210,16 +210,17 @@ npm run test:bench:governance
 ## Git History
 
 ```
-9ede976 - docs(ai-governance): add integration guide and example pricing service
-2c37a4d - perf: add governance endpoints performance benchmarks with SLA validation
-b263a87 - chore(deploy): add staging docker-compose and deployment documentation
-2de7523 - docs: update README for Feature 003 governance endpoints
-5112780 - chore: add docs/lainnya to gitignore
-b2759c5 - docs: summarize feature 003 governance work in changelog
-e59931f - docs(governance): add verification scripts and quickstart checklist
-9cae95f - feat(governance): add release readiness endpoint and decision rules
-b91942a - feat(governance): add summary endpoint with daily and release views
-99c2f62 - feat(governance): add evidence endpoint and US1 test coverage
+7c76ec1 - chore: add development skills and codebase scan artifacts
+103ebba - fix: add required Besu environment variables to backend-api-staging service
+69418f2 - style: polish audit & token-management pages with governance-aligned design tokens
+37a0560 - feat(ui): add admin audit & token-management pages + tokenization test button
+7b349d7 - docs: update usage guide to reflect Docker-based access approach
+6fa5b3a - fix: enable static file serving for admin dashboards
+2d08c79 - docs(design-system): add persistence and integration summary
+54e278c - design(system): persist and integrate design system for garuda-admin
+5ed1db6 - docs(staging): add deployment verification report
+ea29963 - fix(staging): correct Besu config and healthchecks for dev-network mode
+a9fa3c9 - chore(docs): add codebase docs and agent security workflow; persist example design system
 ```
 
 ---
