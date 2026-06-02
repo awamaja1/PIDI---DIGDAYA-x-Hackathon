@@ -18,5 +18,5 @@ __pycache__/
 backend-api/logs/
 
 # Generated docs/diagrams to keep code branch clean
-docs/proposal
+docs/proposal tahap 1
 docs/lainnya
