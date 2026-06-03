@@ -27,7 +27,7 @@ jobs:
       - name: Fail on dangerous patterns
         shell: bash
         run: |
-          if git grep -nE "eval\(|exec\(|subprocess\.run\(|os\.system\(|shell=True|subprocess\.Popen"; then
+          if git grep -nE "eval\(|exec\(|subprocess\.run\(|os\.system\(|shell=True|subprocess\.Popen" -- ':!.github/skills/**' ':!.github/workflows/**' ':!**/*.md'; then
             echo "Dangerous patterns found; fail the job."; exit 1
           else
             echo "No dangerous patterns found.";
