@@ -94,13 +94,6 @@ uvicorn app.main:app --reload
   - Audit store PoC berbasis NDJSON; untuk produksi perlu migrasi ke DB (Postgres) dan retention policy.
   - Dokumentasi run/infra cukup baik untuk PoC, namun monitoring/observability (metrics, tracing) belum lengkap untuk produksi.
 
-## Rekomendasi Singkat
-- Tambah README atau `docs/OPERATIONS.md` dengan langkah reproducible untuk menjalankan 4-node Besu (Docker Compose) dan seed data.
-- Implementasikan dan versi model ML di `ai-engine/models/` dan sertakan small sample dataset untuk demo.
-- Tambah E2E test yang dapat dijalankan di CI menggunakan test doubles untuk Besu (mock) agar pipeline hijau tanpa dependensi infra.
-- Migrasi audit store ke database terkelola untuk integritas dan kueri—atau tambah adapter produksi di `backend-api/src/services/audit`.
-- Tambah observability: Prometheus metrics, structured logs, dan distributed tracing (OTel) terintegrasi.
-
 ## Kesimpulan
 Repositori ini adalah PoC matang untuk use-case tokenisasi aset pertanian dengan perhatian kuat pada governance dan audit. Fokus ke depan sebaiknya pada reproducibility infrastruktur, implementasi model AI nyata, dan peningkatan observability untuk production readiness.
 
@@ -162,9 +155,5 @@ flowchart LR
   classDef comp fill:#f9f,stroke:#333,stroke-width:1px;
   class Backend,AI,Besu,Audit comp
 ```
-
-Jika Anda ingin, saya bisa:
-- Mengekspor daftar fungsi lengkap per-file (termasuk signature dan docstring) ke file `FUNCTIONS.md`.
-- Menghasilkan diagram arsitektur yang lebih rinci (komponen internal `backend-api/src`, alur audit, dan sequence diagram untuk flow tokenisasi).
 
 

@@ -24,10 +24,6 @@
 .github\prompts\speckit.specify.prompt.md
 .github\prompts\speckit.tasks.prompt.md
 .github\prompts\speckit.taskstoissues.prompt.md
-.github\prompts\ui-ux-pro-max
-.github\prompts\ui-ux-pro-max\data
-.github\prompts\ui-ux-pro-max\PROMPT.md
-.github\prompts\ui-ux-pro-max\scripts
 .github\skills
 .github\skills\acquire-codebase-knowledge
 .github\skills\acquire-codebase-knowledge\assets
@@ -49,6 +45,10 @@
 .github\skills\audit-integrity
 .github\skills\audit-integrity\references
 .github\skills\audit-integrity\SKILL.md
+.github\skills\ui-ux-pro-max
+.github\skills\ui-ux-pro-max\data
+.github\skills\ui-ux-pro-max\PROMPT.md
+.github\skills\ui-ux-pro-max\scripts
 .github\workflows
 .github\workflows\agent-security.yml
 .github\workflows\ai-engine-ci.yml
@@ -101,11 +101,18 @@ backend-api\contracts
 backend-api\contracts\abi
 backend-api\contracts\abi\GarudaLinkRegistry.json
 backend-api\contracts\abi\GarudaLinkTokenization.json
+backend-api\DESIGN-SYSTEM-IMPLEMENTATION.md
 backend-api\logs
 backend-api\logs\audit-events.ndjson
 backend-api\package-lock.json
 backend-api\package.json
 backend-api\pnpm-lock.yaml
+backend-api\public
+backend-api\public\admin-audit.html
+backend-api\public\admin-governance.html
+backend-api\public\admin-token-management.html
+backend-api\public\css
+backend-api\public\css\design-system-tokens.css
 backend-api\scripts
 backend-api\scripts\verify-correlation-audit.ps1
 backend-api\scripts\verify-fallback-determinism.ps1
@@ -169,12 +176,23 @@ backend-api\tests\integration\tokenize.fallback.deterministic.test.js
 backend-api\tests\integration\tokenize.success.test.js
 backend-api\tests\integration\update-verify.fallback.deterministic.test.js
 backend-api\tests\integration\update-verify.success.test.js
+besu
+besu\config
+besu\config\staging
 CHANGELOG.md
+CODEBASE_ANALYSIS.md
 DEPLOYMENT.md
 design-system
 design-system\exampleproject
 design-system\exampleproject\MASTER.md
 design-system\exampleproject\pages
+design-system\garuda-admin
+design-system\garuda-admin\MASTER.md
+design-system\garuda-admin\pages
+design-system\garuda-admin\pages\governance.md
+DESIGN-SYSTEM-INTEGRATION.md
+DESIGN-SYSTEM-PERSISTENCE-SUMMARY.md
+DESIGN-SYSTEM-USAGE-GUIDE.md
 docker-compose.staging.yml
 docs
 docs\codebase
@@ -182,24 +200,6 @@ docs\codebase\.codebase-scan-ci.txt
 docs\codebase\.codebase-scan.txt
 docs\codebase\ARCHITECTURE.md
 docs\codebase\CONCERNS.md
-docs\codebase\CONVENTIONS.md
-docs\codebase\INTEGRATIONS.md
-docs\codebase\STACK.md
-docs\codebase\STRUCTURE.md
-docs\codebase\TESTING.md
-docs\lainnya
-docs\lainnya\[Digdaya BI 2026] Onboarding Session.pdf
-docs\lainnya\jadwal fase essential training.jpeg
-docs\lainnya\Screenshot 2026-05-04 185603.png
-docs\lainnya\Screenshot 2026-05-04 190117.png
-docs\lainnya\Screenshot 2026-05-04 190302.png
-docs\lainnya\Screenshot 2026-05-04 190450.png
-docs\lainnya\Screenshot 2026-05-04 190729.png
-docs\lainnya\Screenshot 2026-05-04 190830.png
-docs\lainnya\Screenshot 2026-05-04 191943.png
-docs\lainnya\Screenshot 2026-05-06 111623.png
-docs\lainnya\Screenshot 2026-05-07 185834.png
-docs\lainnya\Screenshot 2026-05-07 194958.png
 
 === STACK DETECTION (manifest files) ===
 No recognized manifest files found in project root.
@@ -231,6 +231,19 @@ No .env.example or .env.template found. Identify required environment variables 
 .github\skills\acquire-codebase-knowledge\scripts\scan.py:622: print_section("TODO / FIXME / HACK (production code only, test dirs excluded)", ["None found."], output_file)
 
 === GIT RECENT COMMITS (last 20) ===
+f4755d5 ci: ignore docs/workflows in dangerous-pattern grep to avoid false positives
+f06aeb0 docs: add CODEBASE_ANALYSIS.md with public functions and mermaid diagram
+beddb41 docs: finalize feature 003 handoff
+7c76ec1 chore: add development skills and codebase scan artifacts
+103ebba fix: add required Besu environment variables to backend-api-staging service
+69418f2 style: polish audit & token-management pages with governance-aligned design tokens
+37a0560 feat(ui): add admin audit & token-management pages + tokenization test button
+7b349d7 docs: update usage guide to reflect Docker-based access approach
+6fa5b3a fix: enable static file serving for admin dashboards
+2d08c79 docs(design-system): add persistence and integration summary
+54e278c design(system): persist and integrate design system for garuda-admin
+5ed1db6 docs(staging): add deployment verification report
+ea29963 fix(staging): correct Besu config and healthchecks for dev-network mode
 a9fa3c9 chore(docs): add codebase docs and agent security workflow; persist example design system
 5f44b61 refactor: simplify governance summary verification script
 baffec4 docs: add staging deployment verification and environment configuration
@@ -238,65 +251,52 @@ baffec4 docs: add staging deployment verification and environment configuration
 9ede976 docs(ai-governance): add integration guide and example pricing service
 2c37a4d perf: add governance endpoints performance benchmarks with SLA validation
 b263a87 chore(deploy): add staging docker-compose and deployment documentation
-2de7523 docs: update README for Feature 003 governance endpoints
-5112780 chore: add docs/lainnya to gitignore
-b2759c5 docs: summarize feature 003 governance work in changelog
-e59931f docs(governance): add verification scripts and quickstart checklist
-9cae95f feat(governance): add release readiness endpoint and decision rules
-b91942a feat(governance): add summary endpoint with daily and release views
-99c2f62 feat(governance): add evidence endpoint and US1 test coverage
-f3f5b7b docs(spec-003): add implementation tasks breakdown
-5ad332f docs(spec-003): add plan, research, and data model
-00b05d7 docs(spec): add feature 003 enhanced compliance governance draft
-a72d515 docs: add comprehensive README for project onboarding
-29fa727 docs: add v0.1.0 changelog and link it in core specs
-2586caf fix ai engine CI
 
 === HIGH-CHURN FILES (last 90 days, top 20) ===
-   5 .gitignore
-   4 backend-api/package.json
-   4 specs/002-smart-contract-integration/quickstart.md
+   3 CHANGELOG.md
+   3 README.md
+   3 docker-compose.staging.yml
    3 backend-api/src/api/routes/governance.js
    3 backend-api/src/services/governance/index.js
-   3 backend-api/src/api/routes/index.js
-   3 .github/workflows/ai-engine-ci.yml
-   3 ai-engine/tests/test_api_contracts.py
-   3 backend-api/node_modules/.package-lock.json
-   3 backend-api/src/api/routes/tokens.js
-   3 backend-api/src/services/besuGatewayService.js
+   2 .github/workflows/agent-security.yml
+   2 .gitignore
+   2 FEATURE-003-COMPLETION-REPORT.md
+   2 backend-api/package.json
+   2 docs/codebase/.codebase-scan.txt
+   2 specs/003-enhanced-compliance-governance/AI-ENGINE-INTEGRATION.md
+   2 specs/003-enhanced-compliance-governance/checklists/requirements.md
+   2 specs/003-enhanced-compliance-governance/plan.md
+   2 specs/003-enhanced-compliance-governance/quickstart.md
+   2 specs/003-enhanced-compliance-governance/research.md
+   2 specs/003-enhanced-compliance-governance/spec.md
+   2 specs/003-enhanced-compliance-governance/tasks.md
+   2 backend-api/public/admin-audit.html
+   2 backend-api/public/admin-token-management.html
    2 backend-api/scripts/verify-governance-summary.ps1
-   2 README.md
-   2 CHANGELOG.md
-   2 specs/001-define-garuda-link-baseline/quickstart.md
-   2 specs/002-smart-contract-integration/plan.md
-   2 specs/002-smart-contract-integration/spec.md
-   2 backend-api/logs/audit-events.ndjson
-   2 backend-api/node_modules/.bin/mime
-   2 backend-api/node_modules/.bin/mime.cmd
 
 === MONOREPO SIGNALS ===
 No monorepo signals detected.
 
 === CODE METRICS ===
-Total files scanned: 273
-Total lines of code: 9699
+Total files scanned: 323
+Total lines of code: 9703
 
 Files by language:
-  Other: 194
+  Other: 244
   JavaScript: 61
   Python: 18
 
 Top 10 largest files:
-docs\proposal\Literatur\Roadmap Pengembangan Perbankan Indonesia 2020-2025 (Long Version).pdf: 40040.7KB
-docs\proposal\Literatur\Cetak Biru Transformasi Digital Perbankan (Short Version).pdf: 30354.0KB
-docs\proposal\BOOKLET PIDI - DIGDAYA X HACKATHON 2026.pdf: 22182.9KB
-docs\proposal\Literatur\Peta Jalan Pengembangan dan Penguatan Lembaga Pengelola Informasi Perkreditan 2024-2028.pdf: 21730.5KB
-docs\proposal\Literatur\Roadmap Pengembangan dan Penguatan Industri BPR dan BPRS RP2B 2024-2027.pdf: 21658.4KB
-docs\proposal\Literatur\Roadmap Penguatan Bank Pembangunan Daerah 2024-2027.pdf: 18699.3KB
-docs\proposal\Literatur\Climate Risk and Banking Sector Resilience Assessment.pdf: 17438.6KB
-docs\proposal\Proyek Garuda - Rupiah Digital\White_Paper_CBDC-2022.pdf: 14166.2KB
-docs\proposal\Literatur\Buku Panduan bagi Bank Perekonomian Rakyat.pdf: 13455.8KB
-docs\proposal\Proyek Garuda - Rupiah Digital\Laporan-Konsultasi-Publik-Proyek-Garuda.pdf: 11742.5KB
+docs\lainnya\Startup-SE-01-AA Understanding the Startup Journey From Idea to Scalable Impact.mp4: 2322724.6KB
+docs\lainnya\Tematic-SE-02-AB Problem Statement #2 Peningkatan Produktivitas, Ketahanan Pangan, dan Penciptaan Lapangan Kerja.mp4: 1213454.0KB
+docs\lainnya\Peningkatan Produktivitas.mp4: 158684.7KB
+docs\lainnya\Ketahanan Pangan.mp4: 141833.3KB
+docs\lainnya\GUIDELINE 3RD SUBMISSION PROPOSAL.pdf: 51490.8KB
+docs\lainnya\Literatur\Roadmap Pengembangan Perbankan Indonesia 2020-2025 (Long Version).pdf: 40040.7KB
+docs\lainnya\Literatur\Cetak Biru Transformasi Digital Perbankan (Short Version).pdf: 30354.0KB
+docs\proposal tahap 1\BOOKLET PIDI - DIGDAYA X HACKATHON 2026.pdf: 22182.9KB
+docs\lainnya\Literatur\Peta Jalan Pengembangan dan Penguatan Lembaga Pengelola Informasi Perkreditan 2024-2028.pdf: 21730.5KB
+docs\lainnya\Literatur\Roadmap Pengembangan dan Penguatan Industri BPR dan BPRS RP2B 2024-2027.pdf: 21658.4KB
 
 === CI/CD PIPELINES ===
 CI/CD: GitHub Actions
