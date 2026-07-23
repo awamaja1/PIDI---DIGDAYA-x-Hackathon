@@ -19,3 +19,4 @@ backend-api/logs/
 
 # Generated docs/diagrams to keep code branch clean
 docs/lainnya
+docs/codebase/.codebase-scan*.txt
